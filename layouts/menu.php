@@ -1,5 +1,5 @@
 <?php
-    $current_file = substr($_SERVER['SCRIPT_NAME'],18);
+$current_file = substr($_SERVER['SCRIPT_NAME'], 18);
 ?>
 
 <header class="">
@@ -14,7 +14,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link <?= ($current_file=='index.php') ? 'active' : '' ?>" href="index.php">หน้าหลัก
+                        <a class="nav-link <?= ($current_file == 'index.php') ? 'active' : '' ?>" href="index.php">หน้าหลัก
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -22,14 +22,29 @@
                         <a class="nav-link" href="javascript:void(0)">บริการ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= ($current_file=='room.php') ? 'active' : '' ?>" href="room.php">ห้องพัก</a>
+                        <a class="nav-link <?= ($current_file == 'room.php') ? 'active' : '' ?>" href="room.php">ห้องพัก</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= ($current_file=='contact.php') ? 'active' : '' ?>" href="contact.php">ติดต่อเรา</a>
+                        <a class="nav-link <?= ($current_file == 'contact.php') ? 'active' : '' ?>" href="contact.php">ติดต่อเรา</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)">เข้าสู่ระบบ/ลงทะเบียน</a>
-                    </li>
+                    <?php if (isset($_SESSION['CUSTOMER_LOGIN'])) : ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                สวัสดี, <?= $_SESSION['CUSTOMER_FIRSTNAME'] ?>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="profile.php">ข้อมูลส่วนตัว</a>
+                                <a class="dropdown-item" href="mybooking.php">ข้อมูลการใช้งาน</a>
+                                <a class="dropdown-item" href="#">แจ้งซ่อมอุปกรณ์</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="logOut()">ออกจากระบบ</a>
+                            </div>
+                        </li>
+                    <?php else : ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?= ($current_file == 'login.php' || $current_file == 'register.php') ? 'active' : '' ?>" href="login.php">เข้าสู่ระบบ/ลงทะเบียน</a>
+                        </li>
+                    <?php endif ?>
                 </ul>
             </div>
         </div>
