@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>จัดการข้อมูลผู้ดูแลระบบ | ระบบจัดการข้อมูลหลังบ้าน DORMITORY KESARA</title>
+    <title>จัดการข้อมูลลูกค้า | ระบบจัดการข้อมูลหลังบ้าน DORMITORY KESARA</title>
     <!-- Sweetalert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Toastr -->
@@ -38,12 +38,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">จัดการข้อมูลผู้ดูแลระบบ</h1>
+                            <h1 class="m-0">จัดการข้อมูลลูกค้า</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="dashboard.php">แดชบอร์ด</a></li>
-                                <li class="breadcrumb-item active">ผู้ดูแลระบบ</li>
+                                <li class="breadcrumb-item active">ลูกค้า</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -71,9 +71,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <table id="dataTable" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>ชื่อผู้ใช้งาน</th>
+                                                <th>รหัสบัตรประชาชน</th>
                                                 <th>ชื่อจริง-นามสกุล</th>
                                                 <th>ข้อมูลติดด่อ</th>
+                                                <th>สถานะบัญชี</th>
                                                 <th>จัดการ</th>
                                             </tr>
                                         </thead>
@@ -137,7 +138,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="dist/js/adminlte.min.js"></script>
 
     <!-- Admin Script -->
-    <script src="functions/admin.js"></script>
+    <script src="functions/customer.js"></script>
 </body>
 
 </html>
