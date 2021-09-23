@@ -60,6 +60,14 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 24);
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="repair.php" class="nav-link <?= ($current_file == 'repair.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-tools"></i>
+                        <p>
+                            รายการแจ้งซ่อม
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item <?= ($current_file == 'admin.php' || $current_file == 'customer.php') ? 'menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= ($current_file == 'admin.php' || $current_file == 'customer.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-users"></i>
