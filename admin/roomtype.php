@@ -19,6 +19,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- DropzoneJS -->
+    <link rel="stylesheet" href="plugins/dropzonejs/dist/min/dropzone.min.css">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
@@ -112,6 +114,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
         </div>
 
+        <div class="modal fade" id="manageImagesModal" tabindex="-1" role="dialog" aria-labelledby="manageImagesModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="manageImagesModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="manageImagesModalBody">
+                        <h3>อัพโหลดรูปภาพ (รีเฟรชใหม่ เพื่อดูรูปภาพที่เพิ่งอัพโหลด)</h1>
+                        <form action="api/roomtype/uploadImage.php" class="dropzone" id="my-awesome-dropzone"></form>
+                        <br>
+                        <hr>
+                        <h3>รูปภาพทั้งหมด</h3>
+                        <div id="uploadedImages"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Include footer file -->
         <?php include_once('layouts/footer.php') ?>
     </div>
@@ -135,6 +158,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- DropzoneJS -->
+    <script src="plugins/dropzonejs/dist/min/dropzone.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.min.js"></script>
 

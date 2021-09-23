@@ -19,6 +19,9 @@ function read() {
                         <button class="btn btn-primary" onclick="edit('${element['id']}')">
                             <i class="fas fa-edit"></i>
                         </button>
+                        <button class="btn btn-info" onclick="manageImages('${element['id']}')">
+                            <i class="fas fa-images"></i>
+                        </button>
                         <button class="btn btn-danger" onclick="deleteData('${element['id']}')">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -181,7 +184,7 @@ function checkName(name) {
     });
 }
 
-function deleteData(id){
+function deleteData(id) {
     swal({
         title: "คุณต้องการลบข้อมูล " + id + "?",
         text: "หากทำการลบไปแล้ว จะไม่สามารถกู้ข้อมูลคืนได้!",
@@ -233,5 +236,93 @@ function create() {
     }).fail(function (res) {
         console.log(res);
         toastr.error(res.responseJSON['message']);
+    });
+}
+
+function manageImages(id) {
+    $.ajax({
+        method: "get",
+        url: "api/roomtype/readImages.php",
+        data: {
+            "id": id
+        }
+    }).done(function (res) {
+        console.log(res);
+
+        let images_html = '<div class="row">';
+
+        res.data.forEach(element => {
+            images_html += `
+                <div class="col-lg-4 col-12 mb-2">
+                    <img src="dist/img/room/${element['img']}" style="width:100%;height:300px">
+                    <button class="btn btn-outline-danger btn-block" onclick="removeImage('${element['img']}','${id}')">ลบภาพนี้</button>
+                </div>
+            `;
+        });
+
+        images_html += '</div>';
+
+        $('#manageImagesModalLabel').text('จัดการรูปภาพห้องพัก รหัสประเภท ' + id);
+        $('#uploadedImages').html(images_html);
+        $('#manageImagesModal').modal('show');
+    }).fail(function (res) {
+        toastr.erro(res.responseJSON['message']);
+    });
+
+}
+
+function removeImage(img, id) {
+    swal({
+        title: "คุณต้องการลบไฟล์ภาพ " + img + "?",
+        text: "หากทำการลบไปแล้ว จะไม่สามารถกู้ข้อมูลคืนได้!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: "get",
+                url: "api/roomtype/removeImage.php",
+                data: {
+                    "img": img
+                }
+            }).done(function (res) {
+                console.log(res);
+                toastr.success(res.message);
+
+                $('#uploadedImages').empty();
+
+                $.ajax({
+                    method: "get",
+                    url: "api/roomtype/readImages.php",
+                    data: {
+                        "id": id
+                    }
+                }).done(function (res) {
+
+                    let images_html = '<div class="row">';
+
+                    res.data.forEach(element => {
+                        images_html += `
+                            <div class="col-lg-4 col-12 mb-2">
+                                <img src="dist/img/room/${element['img']}" style="width:100%;height:300px">
+                                <button class="btn btn-outline-danger btn-block" onclick="removeImage('${element['img']}','${id}')">ลบภาพนี้</button>
+                            </div>
+                        `;
+                    });
+
+                    images_html += '</div>';
+
+                    $('#uploadedImages').html(images_html);
+                }).fail(function (res) {
+                    toastr.erro(res.responseJSON['message']);
+                });
+            }).fail(function (res) {
+                console.log(res);
+                toastr.error(res.responseJSON['message']);
+            });
+        } else {
+            return;
+        }
     });
 }

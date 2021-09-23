@@ -23,7 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
         'type' => $_POST['type'],
-        'floor' => $_POST['floor']
+        'floor' => $_POST['floor'],
+        'id' => $_POST['id']
     ]);
 
     if ($result) {        

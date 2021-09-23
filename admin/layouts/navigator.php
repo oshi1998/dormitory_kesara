@@ -68,6 +68,29 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 24);
                         </p>
                     </a>
                 </li>
+                <li class="nav-item <?= ($current_file == 'daily_book.php' || $current_file == 'monthly_book.php') ? 'menu-open' : '' ?>">
+                    <a href="#" class="nav-link <?= ($current_file == 'daily_book.php' || $current_file == 'monthly_book.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            รายการขอจองห้องพัก
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="admin.php" class="nav-link <?= ($current_file == 'daily_book.php') ? 'active' : '' ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>รายวัน</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="customer.php" class="nav-link <?= ($current_file == 'monthly_book.php') ? 'active' : '' ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>รายเดือน</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item <?= ($current_file == 'admin.php' || $current_file == 'customer.php') ? 'menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= ($current_file == 'admin.php' || $current_file == 'customer.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-users"></i>

@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     require_once('../connect.php');
 
 
-    $sql = "SELECT * FROM rooms ORDER BY created DESC";
+    $sql = "SELECT rooms.id,name,floor,active FROM rooms,roomtypes WHERE rooms.type=roomtypes.id ORDER BY rooms.created DESC";
     $result = $pdo->query($sql);
 
     if ($result) {

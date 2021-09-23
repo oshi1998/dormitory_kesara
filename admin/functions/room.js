@@ -10,19 +10,51 @@ function read() {
             data_html += `
                 <tr>
                     <td>${element['id']}</td>
-                    <td>${element['type_name']}</td>
+                    <td>${element['name']}</td>
                     <td>${element['floor']}</td>
-                    <td>${element['active']}</td>
-                    <td>
-                        <button class="btn btn-primary" onclick="edit('${element['id']}')">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-danger" onclick="deleteData('${element['id']}')">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
             `;
+
+            if(element['active']=="พร้อมใช้งาน"){
+                data_html +=
+                `
+                <td>
+                    <span class="badge badge-success">${element['active']}</span>
+                </td>
+                <td>
+                    <button class="btn btn-primary" onclick="edit('${element['id']}')">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger" onclick="deleteData('${element['id']}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="btn btn-danger" onclick="disable('${element['id']}')">
+                        <i class="fas fa-toilet-paper-slash"></i>
+                    </button>
+                </td>
+            </tr>
+                `;
+            }else{
+                data_html +=
+                `
+                <td>
+                <span class="badge badge-danger">${element['active']}</span>
+                </td>
+                <td>
+                    <button class="btn btn-primary" onclick="edit('${element['id']}')">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger" onclick="deleteData('${element['id']}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="btn btn-success" onclick="enable('${element['id']}')">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </td>
+            </tr>
+                `;
+            }
+                    
+            
         });
 
         $('#databody').html(data_html);
@@ -136,21 +168,23 @@ function edit(id) {
         url: "api/roomtype/read.php",
     }).done(function (res) {
 
+        console.log(res);
         var roomtypes = res.data;
 
         $.ajax({
             method: "get",
-            url: "api/roomtype/readById.php",
+            url: "api/room/readById.php",
             data: {
                 "id": id
             }
         }).done(function (res) {
 
+            console.log(res);
             let form_html = `
             <form id="updateForm">
     
                 <div class="form-group">
-                    <input type="text" class="form-control" name="id" value="${res.data['id']}" placeholder="เลขห้อง (ซ้ำกันไม่ได้)" readonly hidden>
+                    <input type="text" class="form-control" name="id" value="${res.data['id']}" readonly hidden>
                 </div>
     
                 <div class="form-group">
@@ -247,7 +281,6 @@ function enable(id) {
         title: "เปิดใช้งานห้องพักเลข " + id + "?",
         icon: "info",
         buttons: true,
-        dangerMode: true,
     }).then((willEnable) => {
         if (willEnable) {
             $.ajax({
@@ -277,7 +310,6 @@ function disable(id) {
         title: "ปิดใช้งานห้องพักเลข " + id + "?",
         icon: "info",
         buttons: true,
-        dangerMode: true,
     }).then((willDisable) => {
         if (willDisable) {
             $.ajax({
