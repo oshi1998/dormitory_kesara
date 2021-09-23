@@ -83,6 +83,29 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 24);
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item <?= ($current_file == 'roomtype.php' || $current_file == 'room.php') ? 'menu-open' : '' ?>">
+                    <a href="#" class="nav-link <?= ($current_file == 'roomtype.php' || $current_file == 'room.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-bed"></i>
+                        <p>
+                            ห้องพัก
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="roomtype.php" class="nav-link <?= ($current_file == 'roomtype.php') ? 'active' : '' ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>ประเภทห้อง</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="room.php" class="nav-link <?= ($current_file == 'room.php') ? 'active' : '' ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>ห้องพัก</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a href="#" onclick="logOut()" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
