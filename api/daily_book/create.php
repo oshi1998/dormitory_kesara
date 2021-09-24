@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         'time' => $_SESSION['MYBOOK']['TIME'],
         'cost' => $_SESSION['MYBOOK']['COST'],
         'room' => $_SESSION['MYBOOK']['ROOM_ID'],
-        'status' => "รอตรวจสอบ"
+        'status' => "รออนุมัติ"
     ]);
 
     if($result){

@@ -80,19 +80,19 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 24);
                     <a href="#" class="nav-link <?= ($current_file == 'daily_book.php' || $current_file == 'monthly_book.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
-                            จอง-เช่า ห้องพัก
+                            ข้อมูลจองห้องพัก
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="admin.php" class="nav-link <?= ($current_file == 'daily_book.php') ? 'active' : '' ?>">
+                            <a href="daily_book.php" class="nav-link <?= ($current_file == 'daily_book.php') ? 'active' : '' ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>รายวัน</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="customer.php" class="nav-link <?= ($current_file == 'monthly_book.php') ? 'active' : '' ?>">
+                            <a href="monthly_book.php" class="nav-link <?= ($current_file == 'monthly_book.php') ? 'active' : '' ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>รายเดือน</p>
                             </a>

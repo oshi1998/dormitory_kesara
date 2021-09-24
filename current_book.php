@@ -129,7 +129,7 @@ if (!empty($current_book)) {
                 <?php if (!empty($current_book)) : ?>
                     <div class="col-12 mb-5">
                         <ul class="progressbar">
-                            <li class="active">อยู่ระหว่างการตรวจสอบ</li>
+                            <li class="active">รอการอนุมัติ</li>
                             <li>ชำระค่ามัดจำ</li>
                             <li>เช็คอิน</li>
                             <li>เช็คเอาท์</li>
@@ -189,7 +189,7 @@ if (!empty($current_book)) {
                 <?php else : ?>
                     <div class="alert alert-warning" role="alert">
                         <h4 class="alert-heading">คุณไม่ได้กำลังใช้งานห้องพักใดๆ ในขณะนี้</h4>
-                        <strong>หากต้องการใช้งาน สามารถจองห้องพักได้ <a href="daily_book.php">แบบรายวัน</a> และ <a href="monthly_book.php">แบบรายเดือน</a></strong>
+                        <strong>หากเมื่อสักครู่ท่านกำลังอยู่ระหว่างการดำเนินการจองที่พัก เป็นได้ว่าผู้ดูแลระบบได้ปฏิเสธรายการของท่านเช็คประวัติการใช้งานของท่าน <a href="mybooking.php">ประวัติการใช้งาน</a> สามารถจองห้องพักใหม่ได้ <a href="daily_book.php">แบบรายวัน</a> และ <a href="monthly_book.php">แบบรายเดือน</a></strong>
                     </div>
                 <?php endif ?>
 
