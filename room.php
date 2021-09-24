@@ -1,5 +1,16 @@
 <?php
 session_start();
+
+require_once('api/connect.php');
+
+$sql = "SELECT * FROM roomtypes ORDER BY created DESC";
+$stmt = $pdo->query($sql);
+$roomtypes = $stmt->fetchAll();
+
+$sql = "SELECT rooms.id,img,price,type,description FROM rooms,roomtypes WHERE rooms.type=roomtypes.id AND active='พร้อมใช้งาน' ORDER BY rooms.created DESC";
+$stmt = $pdo->query($sql);
+$rooms = $stmt->fetchAll();
+
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +26,16 @@ session_start();
 
 
   <?php require_once('layouts/head.php'); ?>
+
+  <style>
+    #myModal .modal-dialog {
+      -webkit-transform: translate(0, -50%);
+      -o-transform: translate(0, -50%);
+      transform: translate(0, -50%);
+      top: 50%;
+      margin: 0 auto;
+    }
+  </style>
 
 </head>
 
@@ -48,138 +69,60 @@ session_start();
         <div class="col-md-12">
           <div class="filters">
             <ul>
-              <li class="active" data-filter="*">All Products</li>
-              <li data-filter=".des">Featured</li>
-              <li data-filter=".dev">Flash Deals</li>
-              <li data-filter=".gra">Last Minute</li>
+              <li class="active" data-filter="*">ทั้งหมด</li>
+              <?php foreach ($roomtypes as $type) { ?>
+                <li data-filter=".<?= $type['id'] ?>"><?= $type['name'] ?></li>
+              <?php } ?>
             </ul>
           </div>
         </div>
         <div class="col-md-12">
           <div class="filters-content">
             <div class="row grid">
-              <div class="col-lg-4 col-md-4 all des">
-                <div class="product-item">
-                  <a href="#"><img src="assets/images/product_01.jpg" alt=""></a>
-                  <div class="down-content">
-                    <a href="#">
-                      <h4>Tittle goes here</h4>
+              <?php foreach ($rooms as $room) { ?>
+                <div class="col-lg-4 col-md-4 all <?= $room['type'] ?>">
+                  <div class="product-item">
+                    <a href="javascript:void(0)" onclick="viewDetail('<?= $room['id'] ?>')">
+                      <img src="admin/dist/img/room/<?= $room['img'] ?>">
                     </a>
-                    <h6>$18.25</h6>
-                    <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                    <ul class="stars">
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                    </ul>
-                    <span>Reviews (12)</span>
+                    <div class="down-content">
+                      <a href="javascript:void(0)" onclick="viewDetail('<?= $room['id'] ?>')">
+                        <h4><?= $room['id'] ?></h4>
+                      </a>
+                      <h6><?= number_format($room['price']) ?> บาท</h6>
+                      <p><?= $room['description'] ?></p>
+                      <ul class="stars">
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                        <li><i class="fa fa-star"></i></li>
+                      </ul>
+                      <span>
+                        <a href="javascript:void(0)" onclick="viewDetail('<?= $room['id'] ?>')">เพิ่มเติม</a>
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-lg-4 col-md-4 all dev">
-                <div class="product-item">
-                  <a href="#"><img src="assets/images/product_02.jpg" alt=""></a>
-                  <div class="down-content">
-                    <a href="#">
-                      <h4>Tittle goes here</h4>
-                    </a>
-                    <h6>$16.75</h6>
-                    <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                    <ul class="stars">
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                    </ul>
-                    <span>Reviews (24)</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-4 all gra">
-                <div class="product-item">
-                  <a href="#"><img src="assets/images/product_03.jpg" alt=""></a>
-                  <div class="down-content">
-                    <a href="#">
-                      <h4>Tittle goes here</h4>
-                    </a>
-                    <h6>$32.50</h6>
-                    <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                    <ul class="stars">
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                    </ul>
-                    <span>Reviews (36)</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-4 all gra">
-                <div class="product-item">
-                  <a href="#"><img src="assets/images/product_04.jpg" alt=""></a>
-                  <div class="down-content">
-                    <a href="#">
-                      <h4>Tittle goes here</h4>
-                    </a>
-                    <h6>$24.60</h6>
-                    <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                    <ul class="stars">
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                    </ul>
-                    <span>Reviews (48)</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-4 all dev">
-                <div class="product-item">
-                  <a href="#"><img src="assets/images/product_05.jpg" alt=""></a>
-                  <div class="down-content">
-                    <a href="#">
-                      <h4>Tittle goes here</h4>
-                    </a>
-                    <h6>$18.75</h6>
-                    <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                    <ul class="stars">
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                    </ul>
-                    <span>Reviews (60)</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-4 all des">
-                <div class="product-item">
-                  <a href="#"><img src="assets/images/product_06.jpg" alt=""></a>
-                  <div class="down-content">
-                    <a href="#">
-                      <h4>Tittle goes here</h4>
-                    </a>
-                    <h6>$12.50</h6>
-                    <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                    <ul class="stars">
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                      <li><i class="fa fa-star"></i></li>
-                    </ul>
-                    <span>Reviews (72)</span>
-                  </div>
-                </div>
-              </div>
+              <?php } ?>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="myModalBody">
         </div>
       </div>
     </div>
@@ -190,6 +133,7 @@ session_start();
   <?php require_once('layouts/footer.php'); ?>
 
 
+  <script src="functions/room.js"></script>
 </body>
 
 </html>

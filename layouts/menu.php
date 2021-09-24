@@ -29,6 +29,15 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 18);
                     </li>
                     <?php if (isset($_SESSION['CUSTOMER_LOGIN'])) : ?>
                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle <?= ($current_file == 'book_daily.php' || $current_file == 'book_monthly.php') ? 'active' : '' ?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                จองห้องพัก
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="book_daily.php">รายวัน</a>
+                                <a class="dropdown-item" href="book_monthly.php">รายเดือน</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 สวัสดี, <?= $_SESSION['CUSTOMER_FIRSTNAME'] ?>
                             </a>

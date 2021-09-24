@@ -5,7 +5,7 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
     header("Content-Type:application/json");
     require_once('../connect.php');
 
-    $sql = "SELECT * FROM books WHERE customer_id = ?";
+    $sql = "SELECT * FROM daily_books WHERE customer_id = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$_GET['id_card']]);
     $row = $stmt->fetchAll();

@@ -11,7 +11,7 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
     $row = $stmt->fetchObject();
 
     if(!empty($row->current_book)){
-        $sql = "SELECT * FROM books WHERE id = ?";
+        $sql = "SELECT * FROM daily_books WHERE id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$row->current_book]);
         $row = $stmt->fetchObject();
