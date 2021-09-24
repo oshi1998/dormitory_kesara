@@ -68,6 +68,14 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 24);
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="bank.php" class="nav-link <?= ($current_file == 'bank.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-money-bill"></i>
+                        <p>
+                            บัญชีธนาคาร
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item <?= ($current_file == 'daily_book.php' || $current_file == 'monthly_book.php') ? 'menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= ($current_file == 'daily_book.php' || $current_file == 'monthly_book.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-book"></i>

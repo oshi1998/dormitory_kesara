@@ -76,7 +76,7 @@ function add() {
         <form id="createForm">
 
         <div class="form-group">
-            <input type="text" class="form-control" name="firstname" id="inputFirstname" placeholder="ชื่อจริง" onchange="checkFirstname(event.target.value)" required>
+            <input type="text" class="form-control" name="firstname" placeholder="ชื่อจริง"required>
         </div>
         <div class="form-group">
             <input type="text" class="form-control" name="lastname" placeholder="นามสกุล" required>
@@ -184,57 +184,6 @@ function update() {
     }).fail(function (res) {
         console.log(res);
         toastr.error(res.responseJSON['message']);
-    });
-}
-
-function deleteData(username) {
-    swal({
-        title: "คุณต้องการลบข้อมูล " + username + "?",
-        text: "หากทำการลบไปแล้ว จะไม่สามารถกู้ข้อมูลคืนได้!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    }).then((willDelete) => {
-        if (willDelete) {
-            $.ajax({
-                type: "get",
-                url: "api/admin/delete.php",
-                data: {
-                    "username": username
-                }
-            }).done(function (res) {
-                console.log(res);
-                toastr.success(res.message);
-                $('#dataTable').DataTable().destroy();
-                $('#databody').empty();
-                read();
-            }).fail(function (res) {
-                console.log(res);
-                toastr.error(res.responseJSON['message']);
-            });
-        } else {
-            return;
-        }
-    });
-}
-
-function checkFirstname(firstname) {
-    $.ajax({
-        method: "post",
-        url: "api/customer/examine.php",
-        data: {
-            "firstname": firstname,
-            "examine": "firstname"
-        }
-    }).done(function (res) {
-        console.log(res);
-
-        if (res.examine == "Not Empty") {
-            toastr.error(res.message);
-            $('#inputFirstname').val("").focus();
-        }
-    }).fail(function (res) {
-        console.log(res);
     });
 }
 
