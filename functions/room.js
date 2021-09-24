@@ -1,7 +1,7 @@
 function viewDetail(id){
     $.ajax({
         method : "get",
-        url : "api/room/readById.php",
+        url : "api/roomtype/readById.php",
         data : {
             "id" : id
         }
@@ -15,7 +15,6 @@ function viewDetail(id){
                 </div>
                 <div class="col-lg-7 col-12">
                     <p>${res.room['description']}</p>
-                    <p>ชั้น ${res.room['floor']}</p>
                     <p>ราคา ${res.room['price']} บาท</p>
                 </div>
             </div>
@@ -34,7 +33,7 @@ function viewDetail(id){
         });
 
         detail_html += '</div>';
-        $('#myModalLabel').text('รายละเอียดเพิ่มเติมห้อง '+id);
+        $('#myModalLabel').text('รายละเอียดเพิ่มเติมห้อง '+res.room['name']);
         $('#myModalBody').html(detail_html);
         $('#myModal').modal('show');
     }).fail(function(res){

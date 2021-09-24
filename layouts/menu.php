@@ -29,12 +29,12 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 18);
                     </li>
                     <?php if (isset($_SESSION['CUSTOMER_LOGIN'])) : ?>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle <?= ($current_file == 'book_daily.php' || $current_file == 'book_monthly.php') ? 'active' : '' ?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle <?= ($current_file == 'daily_book.php' || $current_file == 'monthly_book.php') ? 'active' : '' ?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 จองห้องพัก
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="book_daily.php">รายวัน</a>
-                                <a class="dropdown-item" href="book_monthly.php">รายเดือน</a>
+                                <a class="dropdown-item" href="daily_book.php">รายวัน</a>
+                                <a class="dropdown-item" href="monthly_book.php">รายเดือน</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -43,7 +43,8 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 18);
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="profile.php">ข้อมูลส่วนตัว</a>
-                                <a class="dropdown-item" href="mybooking.php">ข้อมูลการใช้งาน</a>
+                                <a class="dropdown-item" href="current_book.php">การใช้งานขณะนี้</a>
+                                <a class="dropdown-item" href="mybooking.php">ประวัติการใช้งาน</a>
                                 <a class="dropdown-item" href="#">แจ้งซ่อมอุปกรณ์</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="logOut()">ออกจากระบบ</a>

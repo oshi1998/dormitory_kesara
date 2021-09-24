@@ -370,11 +370,19 @@ function disable(id) {
 }
 
 function viewImg(id,img) {
-    $('#myModalBody').html(
-        `
-            <img style="width:100%" src="dist/img/room/${img}">
-        `
-    );
+    if (img == "") {
+        $('#myModalBody').html(
+            `
+                <strong>ไม่มีไฟล์ภาพ</strong>
+            `
+        );
+    } else {
+        $('#myModalBody').html(
+            `
+                <img style="width:100%" src="dist/img/room/${img}">
+            `
+        );
+    }
     $('#myModalLabel').text('รูปภาพตำแหน่งห้อง '+id);
     $('#myModal').modal('show');
 }

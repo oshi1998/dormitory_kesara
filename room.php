@@ -3,11 +3,11 @@ session_start();
 
 require_once('api/connect.php');
 
-$sql = "SELECT * FROM roomtypes ORDER BY created DESC";
+$sql = "SELECT type FROM roomtypes GROUP BY type";
 $stmt = $pdo->query($sql);
-$roomtypes = $stmt->fetchAll();
+$types = $stmt->fetchAll();
 
-$sql = "SELECT rooms.id,img,price,type,description FROM rooms,roomtypes WHERE rooms.type=roomtypes.id AND active='พร้อมใช้งาน' ORDER BY rooms.created DESC";
+$sql = "SELECT * FROM roomtypes ORDER BY created DESC";
 $stmt = $pdo->query($sql);
 $rooms = $stmt->fetchAll();
 
@@ -70,8 +70,8 @@ $rooms = $stmt->fetchAll();
           <div class="filters">
             <ul>
               <li class="active" data-filter="*">ทั้งหมด</li>
-              <?php foreach ($roomtypes as $type) { ?>
-                <li data-filter=".<?= $type['id'] ?>"><?= $type['name'] ?></li>
+              <?php foreach ($types as $type) { ?>
+                <li data-filter=".<?= $type['type'] ?>"><?= $type['type'] ?></li>
               <?php } ?>
             </ul>
           </div>
@@ -87,7 +87,7 @@ $rooms = $stmt->fetchAll();
                     </a>
                     <div class="down-content">
                       <a href="javascript:void(0)" onclick="viewDetail('<?= $room['id'] ?>')">
-                        <h4><?= $room['id'] ?></h4>
+                        <h4><?= $room['name'] ?></h4>
                       </a>
                       <h6><?= number_format($room['price']) ?> บาท</h6>
                       <p><?= $room['description'] ?></p>

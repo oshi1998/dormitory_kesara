@@ -12,13 +12,13 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>ข้อมูลการใช้งาน | DORMITORY KESARA</title>
+    <title>ประวัติการใช้งาน | DORMITORY KESARA</title>
 
 
     <?php require_once('layouts/head.php'); ?>
 </head>
 
-<body onload="loadMyCurrentBooking('<?= $_SESSION['CUSTOMER_ID'] ?>'),loadMyHistoryBooking('<?= $_SESSION['CUSTOMER_ID'] ?>')">
+<body>
 
     <!-- ***** Preloader Start ***** -->
     <?php require_once('layouts/preloader.php'); ?>
@@ -33,35 +33,17 @@ session_start();
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-content">
-                        <h4>ข้อมูลการใช้งาน</h4>
-                        <h2>ข้อมูลการใช้งานขณะนี้ และประวัติการใช้งานทั้งหมดของคุณ</h2>
+                        <h4>ประวัติการใช้งาน</h4>
+                        <h2>ประวัติการใช้งานทั้งหมดของคุณ</h2>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
     <div class="find-us">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            ข้อมูลการใช้งานปัจจุบัน
-                        </div>
-                        <div class="card-body" id="currentBooking">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8 col-12">
-                    <div class="card">
-                        <div class="card-header" id="heading">
-                        </div>
-                        <div class="card-body" id="showHistory">
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
     header("Content-Type:application/json");
     require_once('../connect.php');
 
-    $sql = "SELECT rooms.id,name,price,floor,description,img,type FROM rooms,roomtypes WHERE rooms.type=roomtypes.id AND rooms.id = ?";
+    $sql = "SELECT daily_rooms.id,floor,price,img,img_position,daily_rooms.type,description FROM daily_rooms,roomtypes WHERE daily_rooms.type=roomtypes.id AND daily_rooms.id = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$_GET['id']]);
     $row1 = $stmt->fetchObject();
