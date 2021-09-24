@@ -1,12 +1,13 @@
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
     header("Content-Type:application/json");
     require_once('../connect.php');
 
-    $sql = "SELECT id FROM rooms WHERE id = ?";
+    $sql = "SELECT id FROM daily_rooms WHERE id = ? UNION SELECT id FROM monthly_rooms WHERE id = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_POST['id']]);
+    $stmt->execute([$_POST['id'],$_POST['id']]);
     $row = $stmt->fetchAll();
 
     if (empty($row)) {

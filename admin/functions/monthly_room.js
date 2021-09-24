@@ -1,22 +1,28 @@
 function read() {
     $.ajax({
         method: "post",
-        url: "api/room/read.php",
+        url: "api/monthly_room/read.php",
     }).done(function (res) {
 
         let data_html = "";
 
         res.data.forEach(element => {
-            data_html += `
+
+            if (element['type'] == "รายเดือน") {
+                data_html += `
                 <tr>
                     <td>${element['id']}</td>
+                    <td>${element['password']}</td>
                     <td>${element['name']}</td>
                     <td>${element['floor']}</td>
+                    <td>
+                        <button class="btn btn-info" onclick="viewImg('${element['id']}','${element['img_position']}')">ดูภาพ</button>
+                    </td>
             `;
 
-            if(element['active']=="พร้อมใช้งาน"){
-                data_html +=
-                `
+                if (element['active'] == "พร้อมใช้งาน") {
+                    data_html +=
+                        `
                 <td>
                     <span class="badge badge-success">${element['active']}</span>
                 </td>
@@ -33,9 +39,9 @@ function read() {
                 </td>
             </tr>
                 `;
-            }else{
-                data_html +=
-                `
+                } else {
+                    data_html +=
+                        `
                 <td>
                 <span class="badge badge-danger">${element['active']}</span>
                 </td>
@@ -52,9 +58,9 @@ function read() {
                 </td>
             </tr>
                 `;
+                }
+
             }
-                    
-            
         });
 
         $('#databody').html(data_html);
@@ -90,15 +96,21 @@ function add() {
             </div>
 
             <div class="form-group">
+                <input type="text" class="form-control" name="password" placeholder="รหัสผ่าน" required>
+            </div>
+
+            <div class="form-group">
                 <select class="form-control" name="type" required>
                     <option value="" selected disabled>--- เลือกประเภทที่พัก ---</option>
             `;
 
         res.data.forEach(element => {
-            form_html +=
-                `
+            if (element['type'] == "รายเดือน") {
+                form_html +=
+                    `
                     <option value="${element['id']}">${element['name']}</option>
                 `
+            }
         });
 
         form_html +=
@@ -108,6 +120,11 @@ function add() {
 
             <div class="form-group">
                 <input type="text" class="form-control" name="floor" placeholder="ชั้น" required>
+            </div>
+
+            <div class="form-group">
+                <label>ไฟล์ภาพตำแหน่งห้อง (ไม่บังคับ)</label>
+                <input type="file" class="form-control" name="img_position" accept="image/*">
             </div>
 
             <div class="modal-footer">
@@ -129,7 +146,7 @@ function add() {
 function checkId(id) {
     $.ajax({
         method: "post",
-        url: "api/room/examine.php",
+        url: "api/monthly_room/examine.php",
         data: {
             "id": id
         }
@@ -145,10 +162,16 @@ function checkId(id) {
 }
 
 function create() {
+
+    let fd = new FormData(document.getElementById("createForm"));
+
     $.ajax({
         method: "post",
-        url: "api/room/create.php",
-        data: $('#createForm').serialize()
+        url: "api/monthly_room/create.php",
+        data: fd,
+        cache: false,
+        contentType: false,
+        processData: false
     }).done(function (res) {
         console.log(res);
         toastr.success(res.message);
@@ -173,7 +196,7 @@ function edit(id) {
 
         $.ajax({
             method: "get",
-            url: "api/room/readById.php",
+            url: "api/monthly_room/readById.php",
             data: {
                 "id": id
             }
@@ -188,14 +211,18 @@ function edit(id) {
                 </div>
     
                 <div class="form-group">
+                    <label>ประเภท</label>
                     <select class="form-control" name="type" id="type">
                 `;
 
             roomtypes.forEach(element => {
-                form_html +=
-                    `
+
+                if (element['type'] == "รายเดือน") {
+                    form_html +=
+                        `
                         <option value="${element['id']}">${element['name']}</option>
                     `
+                }
             });
 
             form_html +=
@@ -204,9 +231,21 @@ function edit(id) {
                 </div>
     
                 <div class="form-group">
+                    <label>ชั้น</label>
                     <input type="text" class="form-control" name="floor" value="${res.data['floor']}" placeholder="ชั้น" required>
                 </div>
-    
+
+                <div class="form-group">
+                    <label>รหัสผ่าน</label>
+                    <input type="text" class="form-control" name="password" value="${res.data['password']}" placeholder="รหัสผ่าน" required>
+                </div>
+
+                <div class="form-group">
+                    <label>ไฟล์ภาพตำแหน่งห้อง (หากต้องการเปลี่ยนให้เลือกไฟล์ใหม่)</label>
+                    <input type="text" name="old_img" value="${res.data['img_position']}" hidden readonly>
+                    <input type="file" class="form-control" name="img_position" accept="image/*">
+                </div>
+
                 <div class="modal-footer">
                     <button type="button" onclick="update()" class="btn btn-success">บันทึก</button>
                 </div>
@@ -228,10 +267,16 @@ function edit(id) {
 }
 
 function update() {
+
+    let fd = new FormData(document.getElementById("updateForm"));
+
     $.ajax({
         method: "post",
-        url: "api/room/update.php",
-        data: $('#updateForm').serialize()
+        url: "api/monthly_room/update.php",
+        data: fd,
+        cache: false,
+        contentType: false,
+        processData: false
     }).done(function (res) {
         console.log(res);
         toastr.success(res.message);
@@ -247,7 +292,7 @@ function update() {
 
 function deleteData(id) {
     swal({
-        title: "คุณต้องการลบข้อมูล " + id + "?",
+        title: "คุณต้องการลบข้อมูลห้อง " + id + "?",
         text: "หากทำการลบไปแล้ว จะไม่สามารถกู้ข้อมูลคืนได้!",
         icon: "warning",
         buttons: true,
@@ -256,7 +301,7 @@ function deleteData(id) {
         if (willDelete) {
             $.ajax({
                 type: "get",
-                url: "api/room/delete.php",
+                url: "api/monthly_room/delete.php",
                 data: {
                     "id": id
                 }
@@ -285,7 +330,7 @@ function enable(id) {
         if (willEnable) {
             $.ajax({
                 type: "get",
-                url: "api/room/enable.php",
+                url: "api/monthly_room/enable.php",
                 data: {
                     "id": id
                 }
@@ -314,7 +359,7 @@ function disable(id) {
         if (willDisable) {
             $.ajax({
                 type: "get",
-                url: "api/room/disable.php",
+                url: "api/monthly_room/disable.php",
                 data: {
                     "id": id
                 }
@@ -332,4 +377,23 @@ function disable(id) {
             return;
         }
     });
+}
+
+function viewImg(id, img) {
+
+    if (img == "") {
+        $('#myModalBody').html(
+            `
+                <strong>ไม่มีไฟล์ภาพ</strong>
+            `
+        );
+    } else {
+        $('#myModalBody').html(
+            `
+                <img style="width:100%" src="dist/img/room/${img}">
+            `
+        );
+    }
+    $('#myModalLabel').text('รูปภาพตำแหน่งห้อง ' + id);
+    $('#myModal').modal('show');
 }

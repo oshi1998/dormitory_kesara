@@ -31,10 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $dir_target = "../../dist/img/room/" . $file;
     }
 
-    $sql = "UPDATE roomtypes SET name=:name,description=:description,price=:price,img=:img WHERE id=:id";
+    $sql = "UPDATE roomtypes SET name=:name,type=:type,description=:description,price=:price,img=:img WHERE id=:id";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
         'name' => $_POST['name'],
+        'type' => $_POST['type'],
         'description' => $_POST['description'],
         'price' => $_POST['price'],
         'img' => $file,

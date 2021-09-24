@@ -11,14 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         exit;
     } else {
 
-        $sql = "SELECT id FROM books WHERE room_id=?";
+        $sql = "SELECT id FROM monthly_books WHERE monthly_room_id=?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$_GET['id']]);
         $row = $stmt->fetchAll();
 
         if (empty($row)) {
 
-            $sql = "DELETE FROM rooms WHERE id = ?";
+            $sql = "DELETE FROM monthly_rooms WHERE id = ?";
             $stmt = $pdo->prepare($sql);
             $result = $stmt->execute([$_GET['id']]);
 

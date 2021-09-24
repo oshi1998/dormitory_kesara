@@ -1,18 +1,19 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     header("Content-Type:application/json");
     require_once('../connect.php');
 
 
-    $sql = "SELECT rooms.id,name,floor,active FROM rooms,roomtypes WHERE rooms.type=roomtypes.id ORDER BY rooms.created DESC";
-    $result = $pdo->query($sql);
+    $sql = "SELECT * FROM monthly_rooms WHERE id=?";
+    $stmt = $pdo->prepare($sql);
+    $result = $stmt->execute([$_GET['id']]);
 
     if ($result) {
-        $row = $result->fetchAll();
+        $row = $stmt->fetchObject();
         http_response_code(200);
-        echo json_encode(['status' => true, 'message' => "โหลดข้อมูลห้องพักสำเร็จ", 'data' => $row]);
+        echo json_encode(['status' => true, 'message' => "โหลดข้อมูลห้องพัก $_GET[id] สำเร็จ", 'data' => $row]);
         exit;
     } else {
         http_response_code(412);

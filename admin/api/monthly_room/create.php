@@ -9,6 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         http_response_code(412);
         echo json_encode(['status' => false, 'message' => 'กรุณากรอกข้อมูลเลขห้อง']);
         exit;
+    } else if (empty($_POST['password'])) {
+        http_response_code(412);
+        echo json_encode(['status' => false, 'message' => 'กรุณากรอกรหัสผ่าน']);
+        exit;
     } else if (empty($_POST['type'])) {
         http_response_code(412);
         echo json_encode(['status' => false, 'message' => 'กรุณาเลือกประเภทห้องพัก']);
@@ -19,12 +23,24 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         exit;
     }
 
-    $sql = "INSERT INTO rooms (id,type,floor) VALUES (:id,:type,:floor)";
+
+    if (!empty($_FILES['img_position']['name'])) {
+        $extention = strrchr($_FILES['img_position']['name'], '.');
+        $file = uniqid() . $extention;
+        $dir_target = "../../dist/img/room/" . $file;
+        move_uploaded_file($_FILES['img_position']['tmp_name'], $dir_target);
+    } else {
+        $file = "";
+    }
+
+    $sql = "INSERT INTO monthly_rooms (id,password,type,floor,img_position) VALUES (:id,:password,:type,:floor,:img)";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
         'id' => $_POST['id'],
+        'password' => $_POST['password'],
         'type' => $_POST['type'],
         'floor' => $_POST['floor'],
+        'img' => $file
     ]);
 
     if ($result) {

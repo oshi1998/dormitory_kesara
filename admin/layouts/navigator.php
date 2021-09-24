@@ -64,7 +64,7 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 24);
                     <a href="repair.php" class="nav-link <?= ($current_file == 'repair.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-tools"></i>
                         <p>
-                            รายการแจ้งซ่อม
+                            แจ้งซ่อมบำรุงห้อง
                         </p>
                     </a>
                 </li>
@@ -72,7 +72,7 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 24);
                     <a href="#" class="nav-link <?= ($current_file == 'daily_book.php' || $current_file == 'monthly_book.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
-                            รายการขอจองห้องพัก
+                            จอง-เช่า ห้องพัก
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -114,8 +114,8 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 24);
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item <?= ($current_file == 'roomtype.php' || $current_file == 'room.php') ? 'menu-open' : '' ?>">
-                    <a href="#" class="nav-link <?= ($current_file == 'roomtype.php' || $current_file == 'room.php') ? 'active' : '' ?>">
+                <li class="nav-item <?= ($current_file == 'roomtype.php' || $current_file == 'daily_room.php' || $current_file == 'monthly_room.php') ? 'menu-open' : '' ?>">
+                    <a href="#" class="nav-link <?= ($current_file == 'roomtype.php' || $current_file == 'daily_room.php' || $current_file == 'monthly_room.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-bed"></i>
                         <p>
                             ห้องพัก
@@ -130,9 +130,15 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 24);
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="room.php" class="nav-link <?= ($current_file == 'room.php') ? 'active' : '' ?>">
+                            <a href="daily_room.php" class="nav-link <?= ($current_file == 'daily_room.php') ? 'active' : '' ?>">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>ห้องพัก</p>
+                                <p>ห้องพักรายวัน</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="monthly_room.php" class="nav-link <?= ($current_file == 'monthly_room.php') ? 'active' : '' ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>ห้องพักรายเดือน</p>
                             </a>
                         </li>
                     </ul>

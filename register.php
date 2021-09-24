@@ -50,7 +50,7 @@ session_start();
                             <strong>แบบฟอร์มลงทะเบียน</strong>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="firstname" id="inputFirstname" placeholder="ชื่อจริง" onchange="checkFirstname(event.target.value)" required>
+                            <input type="text" class="form-control" name="firstname" placeholder="ชื่อจริง" required>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" name="lastname" placeholder="นามสกุล" required>

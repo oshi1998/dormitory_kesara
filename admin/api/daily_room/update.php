@@ -19,15 +19,31 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         exit;
     }
 
-    $sql = "UPDATE rooms SET type=:type,floor=:floor WHERE id=:id";
+    if (!empty($_FILES['img_position']['name'])) {
+
+        if ($_POST['old_img'] != "") {
+            $delete_target = "../../dist/img/room/" . $_POST['old_img'];
+            unlink($delete_target);
+        }
+        
+        $extention = strrchr($_FILES['img_position']['name'], '.');
+        $file = uniqid() . $extention;
+        $dir_target = "../../dist/img/room/" . $file;
+        move_uploaded_file($_FILES['img_position']['tmp_name'], $dir_target);
+    } else {
+        $file = $_POST['old_img'];
+    }
+
+    $sql = "UPDATE daily_rooms SET type=:type,floor=:floor,img_position=:img WHERE id=:id";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
         'type' => $_POST['type'],
         'floor' => $_POST['floor'],
-        'id' => $_POST['id']
+        'id' => $_POST['id'],
+        'img' => $file
     ]);
 
-    if ($result) {        
+    if ($result) {
         http_response_code(200);
         echo json_encode(['status' => true, 'message' => "อัพเดตข้อมูลห้องพัก $_POST[id] สำเร็จ"]);
         exit;

@@ -13,6 +13,7 @@ function read() {
                         <img class="img-lg" src="dist/img/room/${element['img']}">
                     </td>
                     <td>${element['name']}</td>
+                    <td>${element['type']}</td>
                     <td>${element['description']}</td>
                     <td>${element['price']}</td>
                     <td>
@@ -62,6 +63,14 @@ function add() {
 
             <div class="form-group">
                 <input type="text" class="form-control" name="name" id="inputName" onchange="checkName(event.target.value)" placeholder="ชื่อประเภท (ซ้ำกันไม่ได้)" required>
+            </div>
+
+            <div class="form-group">
+                <select class="form-control" name="type" required>
+                    <option value="" selected disabled>--- เลือกรูปแบบ ---</option>
+                    <option value="รายวัน">รายวัน</option>
+                    <option value="รายเดือน">รายเดือน</option>
+                </select>
             </div>
 
             <div class="form-group">
@@ -120,6 +129,13 @@ function edit(id) {
             </div>
 
             <div class="form-group">
+                <select class="form-control" name="type" id="type" required>
+                    <option value="รายวัน">รายวัน</option>
+                    <option value="รายเดือน">รายเดือน</option>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <textarea class="form-control" name="description" placeholder="คำอธิบาย" required>${res.data['description']}</textarea>
             </div>
 
@@ -135,6 +151,7 @@ function edit(id) {
 
         $('#myModalLabel').text('แก้ไขข้อมูลประเภทห้อง ' + id);
         $('#myModalBody').html(form_html);
+        $('#type').val(res.data['type']);
         $('#myModal').modal('show');
     }).fail(function (res) {
         console.log(res);

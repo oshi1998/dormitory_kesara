@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     require_once('../connect.php');
 
 
-    $sql = "SELECT * FROM rooms WHERE id=?";
+    $sql = "SELECT * FROM daily_rooms WHERE id=?";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([$_GET['id']]);
 
