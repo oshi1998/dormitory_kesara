@@ -81,6 +81,14 @@ if (empty($row->current_book)) {
     <link rel="stylesheet" href="vendor/daterangepicker/daterangepicker.css">
 
     <style>
+        #myModal .modal-dialog {
+            -webkit-transform: translate(0, -50%);
+            -o-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+            top: 50%;
+            margin: 0 auto;
+        }
+
         .progressbar {
             counter-reset: step;
         }
@@ -339,11 +347,11 @@ if (empty($row->current_book)) {
                             </tr>
                             <tr>
                                 <th>ค่ามัดจำจองที่พัก 50% (บาท)</th>
-                                <td><?= number_format($_SESSION['MYBOOK']['COST'] / 2,2) ?></td>
+                                <td><?= number_format($_SESSION['MYBOOK']['COST'] / 2, 2) ?></td>
                             </tr>
                             <tr>
                                 <th>ค่าที่พักทั้งหมด (บาท)</th>
-                                <td><?= number_format($_SESSION['MYBOOK']['COST'],2) ?></td>
+                                <td><?= number_format($_SESSION['MYBOOK']['COST'], 2) ?></td>
                             </tr>
                         </table>
 

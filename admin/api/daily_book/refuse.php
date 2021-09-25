@@ -5,6 +5,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     header("Content-type:application/json");
     require_once('../connect.php');
 
+    if(empty($_POST['note'])){
+        http_response_code(412);
+        echo json_encode(['status' => false, 'message' => "โปรดระบุสาเหตุที่ปฏิเสธ"]);
+        exit;
+    }
+
     $sql = "UPDATE daily_books SET status=:status,note=:note WHERE id=:id";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
@@ -14,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     ]);
 
     if ($result) {
-        
+
         $sql = "UPDATE customers SET current_book='' WHERE current_book = '$_POST[id]'";
         $pdo->query($sql);
 

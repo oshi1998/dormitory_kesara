@@ -42,6 +42,14 @@ if (!empty($current_book)) {
     <?php require_once('layouts/head.php'); ?>
 
     <style>
+        #myModal .modal-dialog {
+            -webkit-transform: translate(0, -50%);
+            -o-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+            top: 70%;
+            margin: 0 auto;
+        }
+
         .progressbar {
             counter-reset: step;
         }
@@ -130,8 +138,8 @@ if (!empty($current_book)) {
                     <div class="col-12 mb-5">
                         <ul class="progressbar">
                             <li class="active">รอการอนุมัติ</li>
-                            <li>ชำระค่ามัดจำ</li>
-                            <li>เช็คอิน</li>
+                            <li class="<?= ($book->status=="รอเช็คอิน" || $book->status=="อยู่ระหว่างการเช็คอิน") ? 'active' : '' ?>">ชำระค่ามัดจำ</li>
+                            <li class="<?= ($book->status=="อยู่ระหว่างการเช็คอิน") ? 'active' : '' ?>">เช็คอิน</li>
                             <li>เช็คเอาท์</li>
                         </ul>
                     </div>
@@ -159,11 +167,11 @@ if (!empty($current_book)) {
                                 <td><?= $book->duration ?> คืน</td>
                             </tr>
                             <tr>
-                                <th>เช็คอิน</th>
+                                <th>กำหนดการเช็คอิน</th>
                                 <td><?= $book->check_in ?> เวลา <?= $book->time ?> น.</td>
                             </tr>
                             <tr>
-                                <th>เช็คเอาท์</th>
+                                <th>กำหนดการเช็คเอาท์</th>
                                 <td><?= $book->check_out ?> เวลา <?= $book->time ?> น.</td>
                             </tr>
                             <tr>
@@ -178,7 +186,14 @@ if (!empty($current_book)) {
                                 <th>สถานะ</th>
                                 <td>
                                     <span class="badge badge-primary"><?= $book->status ?></span>
+                                    <?php if($book->status=="รอชำระค่ามัดจำ") : ?>
+                                    <a href="javascript:void(0)" onclick="deposit('<?= $book->id ?>','<?= $book->cost/2 ?>')">คลิกชำระค่ามัดจำ!</a>
+                                    <?php endif ?>
                                 </td>
+                            </tr>
+                            <tr>
+                                <th>เช็คอินเมื่อ</th>
+                                <td><?= ($book->check_in_datetime=="" || $book->check_in_datetime==null) ? 'ยังไม่ได้เช็คอินที่พัก' : $book->check_in_datetime ?></td>
                             </tr>
                             <tr>
                                 <th>หมายเหตุ</th>
@@ -197,11 +212,27 @@ if (!empty($current_book)) {
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="myModalBody">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <?php require_once('layouts/footer.php'); ?>
 
 
-    <script src="functions/mybooking.js"></script>
+    <script src="functions/current_book.js"></script>
 </body>
 
 </html>

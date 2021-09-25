@@ -23,6 +23,7 @@ function read() {
                 <tr>
                     <td>
                         รหัส: <span class="badge badge-btn badge-success">${element['id']}</span> <br>
+                        ห้อง: ${element['daily_room_id']} <br>
                         ช่วงวันที่: ${element['daterange']} <br>
                         ระยะเวลา: ${element['duration']} คืน <br>
                         เวลา: ${element['time']} น. <br>
@@ -105,6 +106,7 @@ function readByStatus1() {
                 <tr>
                     <td>
                         รหัส: <span class="badge badge-btn badge-success">${element['id']}</span> <br>
+                        ห้อง: ${element['daily_room_id']} <br>
                         ช่วงวันที่: ${element['daterange']} <br>
                         ระยะเวลา: ${element['duration']} คืน <br>
                         เวลา: ${element['time']} น. <br>
@@ -187,6 +189,7 @@ function readByStatus2() {
                 <tr>
                     <td>
                         รหัส: <span class="badge badge-btn badge-success">${element['id']}</span> <br>
+                        ห้อง: ${element['daily_room_id']} <br>
                         ช่วงวันที่: ${element['daterange']} <br>
                         ระยะเวลา: ${element['duration']} คืน <br>
                         เวลา: ${element['time']} น. <br>
@@ -249,11 +252,14 @@ function readByStatus3() {
         url: "api/daily_book/readByStatus3.php",
     }).done(function (res) {
 
+        console.log(res);
+
         let data_html = `
             <thead>
                 <tr>
                     <th>ข้อมูลจอง</th>
                     <th>ข้อมูลลูกค้า</th>
+                    <th>ข้อมูลชำระค่ามัดจำ</th>
                     <th>สถานะ</th>
                     <th>จัดการ</th>
                 </tr>
@@ -265,6 +271,7 @@ function readByStatus3() {
                 <tr>
                     <td>
                         รหัส: <span class="badge badge-btn badge-success">${element['id']}</span> <br>
+                        ห้อง: ${element['daily_room_id']} <br>
                         ช่วงวันที่: ${element['daterange']} <br>
                         ระยะเวลา: ${element['duration']} คืน <br>
                         เวลา: ${element['time']} น. <br>
@@ -278,11 +285,27 @@ function readByStatus3() {
                         เบอร์โทร: ${element['phone_number']} <br>
                         อีเมล: ${element['email']}
                     </td> 
+                    <td>
+                        รหัส: ${element['dep_id']} <button class="btn btn-info btn-sm" onclick="viewSlip('${element['dep_id']}','${element['slip']}')">ดูสลิป</button> <br><hr>
+                        <strong>ข้อมูลผู้รับเงิน</strong> <br>
+                        ธนาคาร: ${element['receive_bank']} <br> 
+                        เลขบัญชี: ${element['receive_account_number']} <br> 
+                        เจ้าของบัญชี: ${element['receive_owner']} <br><hr>
+                        <strong>ข้อมูลผู้โอนเงิน</strong> <br>
+                        ธนาคาร: ${element['transfer_bank']} <br> 
+                        เลขบัญชี: ${element['transfer_account_number']} <br>
+                        เจ้าของบัญชี: ${element['transfer_owner']} <br>
+                        เวลาโอน : ${element['transfer_datetime']} <br>
+                    </td>
                     <td>${element['status']}</td>
                     <td>
-                        <button class="btn btn-success" onclick="approve('${element['id']}')">
+                        <button class="btn btn-success" onclick="approveDeposit('${element['id']}')">
                             <i class="fas fa-check"></i>
                             อนุมัติ
+                        </button>
+                        <button class="btn btn-danger" onclick="refuse('${element['id']}')">
+                            <i class="fas fa-times"></i>
+                            ปฏิเสธ
                         </button>
                     </td>
                 </tr>
@@ -343,6 +366,7 @@ function readByStatus4() {
                 <tr>
                     <td>
                         รหัส: <span class="badge badge-btn badge-success">${element['id']}</span> <br>
+                        ห้อง: ${element['daily_room_id']} <br>
                         ช่วงวันที่: ${element['daterange']} <br>
                         ระยะเวลา: ${element['duration']} คืน <br>
                         เวลา: ${element['time']} น. <br>
@@ -358,9 +382,9 @@ function readByStatus4() {
                     </td> 
                     <td>${element['status']}</td>
                     <td>
-                        <button class="btn btn-success" onclick="approve('${element['id']}')">
+                        <button class="btn btn-success" onclick="checkIn('${element['id']}')">
                             <i class="fas fa-check"></i>
-                            อนุมัติ
+                            เช็คอิน
                         </button>
                         <button class="btn btn-danger" onclick="refuse('${element['id']}')">
                             <i class="fas fa-times"></i>
@@ -425,6 +449,7 @@ function readByStatus5() {
                 <tr>
                     <td>
                         รหัส: <span class="badge badge-btn badge-success">${element['id']}</span> <br>
+                        ห้อง: ${element['daily_room_id']} <br>
                         ช่วงวันที่: ${element['daterange']} <br>
                         ระยะเวลา: ${element['duration']} คืน <br>
                         เวลา: ${element['time']} น. <br>
@@ -438,7 +463,10 @@ function readByStatus5() {
                         เบอร์โทร: ${element['phone_number']} <br>
                         อีเมล: ${element['email']}
                     </td> 
-                    <td>${element['status']}</td>
+                    <td>
+                    ${element['status']} <br><hr>
+                    เช็คอินเมื่อ: ${element['check_in_datetime']}
+                    </td>
                     <td>
                         <button class="btn btn-success" onclick="checkOut('${element['id']}')">
                             <i class="fas fa-check"></i>
@@ -502,6 +530,7 @@ function readByStatus6() {
                 <tr>
                     <td>
                         รหัส: <span class="badge badge-btn badge-success">${element['id']}</span> <br>
+                        ห้อง: ${element['daily_room_id']} <br>
                         ช่วงวันที่: ${element['daterange']} <br>
                         ระยะเวลา: ${element['duration']} คืน <br>
                         เวลา: ${element['time']} น. <br>
@@ -515,7 +544,10 @@ function readByStatus6() {
                         เบอร์โทร: ${element['phone_number']} <br>
                         อีเมล: ${element['email']}
                     </td> 
-                    <td>${element['status']}</td>
+                    <td>${element['status']} <br><hr>
+                    เช็คอินเมื่อ: ${element['check_in_datetime']} <br>
+                    เช็คเอาท์เมื่อ: ${element['check_out_datetime']}
+                    </td>
                 </tr>
             `;
         });
@@ -574,6 +606,7 @@ function readByStatus7() {
                 <tr>
                     <td>
                         รหัส: <span class="badge badge-btn badge-success">${element['id']}</span> <br>
+                        ห้อง: ${element['daily_room_id']} <br>
                         ช่วงวันที่: ${element['daterange']} <br>
                         ระยะเวลา: ${element['duration']} คืน <br>
                         เวลา: ${element['time']} น. <br>
@@ -658,6 +691,93 @@ function approve(id) {
     });
 }
 
+function approveDeposit(id) {
+    swal({
+        title: "ยืนยันการอนุมัติชำระค่ามัดจำหมายเลขจอง " + id + " ?",
+        text: "หากดำเนินการไปแล้ว จะไม่สามารถกลับมาแก้ไขได้!",
+        icon: "warning",
+        buttons: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: "get",
+                url: "api/daily_book/approve_deposit.php",
+                data: {
+                    "id": id
+                }
+            }).done(function (res) {
+                console.log(res);
+                toastr.success(res.message);
+                readByStatus1();
+                countNotification();
+            }).fail(function (res) {
+                console.log(res);
+                toastr.error(res.responseJSON['message']);
+            });
+        } else {
+            return;
+        }
+    });
+}
+
+function checkIn(id) {
+    swal({
+        title: "ยืนยันการเช็คอินหมายเลขจอง " + id + " ?",
+        text: "หากดำเนินการไปแล้ว จะไม่สามารถกลับมาแก้ไขได้!",
+        icon: "warning",
+        buttons: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: "get",
+                url: "api/daily_book/check_in.php",
+                data: {
+                    "id": id
+                }
+            }).done(function (res) {
+                console.log(res);
+                toastr.success(res.message);
+                readByStatus1();
+                countNotification();
+            }).fail(function (res) {
+                console.log(res);
+                toastr.error(res.responseJSON['message']);
+            });
+        } else {
+            return;
+        }
+    });
+}
+
+function checkOut(id) {
+    swal({
+        title: "ยืนยันการเช็คเอาท์หมายเลขจอง " + id + " ?",
+        text: "หากดำเนินการไปแล้ว จะไม่สามารถกลับมาแก้ไขได้!",
+        icon: "warning",
+        buttons: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: "get",
+                url: "api/daily_book/check_out.php",
+                data: {
+                    "id": id
+                }
+            }).done(function (res) {
+                console.log(res);
+                toastr.success(res.message);
+                readByStatus1();
+                countNotification();
+            }).fail(function (res) {
+                console.log(res);
+                toastr.error(res.responseJSON['message']);
+            });
+        } else {
+            return;
+        }
+    });
+}
+
 function refuse(id) {
 
     let form_html = `
@@ -696,4 +816,14 @@ function submitRefuse() {
         console.log(res);
         toastr.error(res.responseJSON['message']);
     });
+}
+
+function viewSlip(id, slip) {
+    $('#myModalLabel').text('สลิปโอนค่ามัดจำ ' + id);
+    $('#myModalBody').html(
+        `
+            <img src="dist/img/slip/${slip}" style="width:100%">
+        `
+    );
+    $('#myModal').modal('show');
 }

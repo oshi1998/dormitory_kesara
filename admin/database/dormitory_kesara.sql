@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2021 at 01:10 AM
+-- Generation Time: Sep 25, 2021 at 03:54 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -96,8 +96,8 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id_card`, `firstname`, `lastname`, `gender`, `phone_number`, `address`, `email`, `password`, `current_book`, `status`, `active`, `created`, `updated`) VALUES
-('1459900696781', 'วงศ์วสันต์', 'ดวงเกตุ', 'ชาย', '0972651700', '', 'thephenome1998@gmail.com', '$2y$10$J9FHiu.nhwt3xzQfk9QAGewv83Q2EZ.gi0Ok91MMIvAJqlimrS6Pa', 'DB20210925-780', 'ว่าง', 'Enable', '2021-09-22 18:11:13', '2021-09-24 23:09:07'),
-('9999999999999', 'กฤตภาส', 'ฉัตรอุดมกุล', 'ชาย', '0972651700', '', 'test001@gmail.com', '$2y$10$XgbZ/ZiMUvTjJytOT5ZNCOV3fjiBo3.yvb0J8KiLPPOPbYfeJDuzy', '', 'ว่าง', 'Enable', '2021-09-23 08:36:02', '2021-09-24 23:02:59');
+('1459900696781', 'วงศ์วสันต์', 'ดวงเกตุ', 'ชาย', '0972651700', '', 'thephenome1998@gmail.com', '$2y$10$J9FHiu.nhwt3xzQfk9QAGewv83Q2EZ.gi0Ok91MMIvAJqlimrS6Pa', '', 'ว่าง', 'Enable', '2021-09-22 18:11:13', '2021-09-25 01:34:36'),
+('9999999999999', 'กฤตภาส', 'ฉัตรอุดมกุล', 'ชาย', '0972651700', '', 'test001@gmail.com', '$2y$10$XgbZ/ZiMUvTjJytOT5ZNCOV3fjiBo3.yvb0J8KiLPPOPbYfeJDuzy', '', 'ว่าง', 'Enable', '2021-09-23 08:36:02', '2021-09-25 01:47:16');
 
 -- --------------------------------------------------------
 
@@ -129,8 +129,9 @@ CREATE TABLE `daily_books` (
 
 INSERT INTO `daily_books` (`id`, `customer_id`, `daterange`, `duration`, `check_in`, `check_out`, `time`, `cost`, `check_in_datetime`, `check_out_datetime`, `daily_room_id`, `status`, `note`, `created`, `updated`) VALUES
 ('DB20210924-795', '1459900696781', '2021-09-28 ถึง 2021-09-30', 2, '2021-09-28', '2021-09-30', '10:00:00', '600.00', NULL, NULL, 'A1', 'ยกเลิก', 'ชำระค่ามัดจำช้า', '2021-09-24 19:04:04', '2021-09-24 23:08:05'),
+('DB20210925-684', '9999999999999', '2021-10-01 ถึง 2021-10-05', 4, '2021-10-01', '2021-10-05', '12:00:00', '1200.00', '2021-09-25 08:47:08', '2021-09-25 08:47:16', 'A2', 'เสร็จสิ้น', '', '2021-09-25 01:45:16', '2021-09-25 01:47:16'),
 ('DB20210925-744', '9999999999999', '2021-09-25 ถึง 2021-09-26', 1, '2021-09-25', '2021-09-26', '13:00:00', '300.00', NULL, NULL, 'A2', 'ยกเลิก', 'ห้องไม่พร้อมบริการ', '2021-09-24 22:55:33', '2021-09-24 23:02:59'),
-('DB20210925-780', '1459900696781', '2021-09-27 ถึง 2021-09-28', 1, '2021-09-27', '2021-09-28', '14:00:00', '300.00', NULL, NULL, 'A1', 'รอชำระค่ามัดจำ', '', '2021-09-24 23:09:07', '2021-09-24 23:09:15');
+('DB20210925-780', '1459900696781', '2021-09-27 ถึง 2021-09-28', 1, '2021-09-27', '2021-09-28', '14:00:00', '300.00', '2021-09-25 08:28:43', '2021-09-25 08:34:36', 'A1', 'เสร็จสิ้น', '', '2021-09-24 23:09:07', '2021-09-25 01:34:36');
 
 -- --------------------------------------------------------
 
@@ -168,7 +169,9 @@ CREATE TABLE `deposits` (
   `book_id` varchar(255) NOT NULL COMMENT 'เลขจอง',
   `amount` decimal(10,2) NOT NULL COMMENT 'ยอดเงิน',
   `slip` text NOT NULL COMMENT 'ไฟล์ภาพสลิป',
-  `bank_id` int(11) NOT NULL COMMENT 'ธนาคารรับเงิน',
+  `receive_bank` varchar(255) NOT NULL COMMENT 'ธนาคารรับเงิน',
+  `receive_account_number` varchar(255) NOT NULL COMMENT 'เลขบัญชีผู้รับ',
+  `receive_owner` varchar(255) NOT NULL COMMENT 'ชื่อผู้รับโอน',
   `transfer_bank` varchar(255) NOT NULL COMMENT 'ธนาคารผู้โอน',
   `transfer_account_number` varchar(255) NOT NULL COMMENT 'เลขบัญชีผู้โอน',
   `transfer_owner` varchar(255) NOT NULL COMMENT 'ชื่อบัญชีผู้โอน',
@@ -176,6 +179,14 @@ CREATE TABLE `deposits` (
   `created` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'วันที่สร้างข้อมูล',
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'อัพเดตล่าสุด'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `deposits`
+--
+
+INSERT INTO `deposits` (`id`, `customer_id`, `book_id`, `amount`, `slip`, `receive_bank`, `receive_account_number`, `receive_owner`, `transfer_bank`, `transfer_account_number`, `transfer_owner`, `transfer_datetime`, `created`, `updated`) VALUES
+('DP20210925-214', '9999999999999', 'DB20210925-684', '600.00', 'DP20210925-214.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4666666612', 'กฤตภาส ฉัตรอุดมกุล', '2021-09-25 08:46:00', '2021-09-25 01:46:15', '2021-09-25 01:46:15'),
+('DP20210925-238', '1459900696781', 'DB20210925-780', '150.00', 'DP20210925-238.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', '2021-09-25 07:39:00', '2021-09-25 00:39:17', '2021-09-25 00:39:17');
 
 -- --------------------------------------------------------
 
@@ -339,7 +350,8 @@ ALTER TABLE `daily_rooms`
 -- Indexes for table `deposits`
 --
 ALTER TABLE `deposits`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_id` (`customer_id`);
 
 --
 -- Indexes for table `images`
@@ -406,6 +418,12 @@ ALTER TABLE `daily_books`
 --
 ALTER TABLE `daily_rooms`
   ADD CONSTRAINT `daily_rooms_ibfk_1` FOREIGN KEY (`type`) REFERENCES `roomtypes` (`id`);
+
+--
+-- Constraints for table `deposits`
+--
+ALTER TABLE `deposits`
+  ADD CONSTRAINT `deposits_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id_card`);
 
 --
 -- Constraints for table `images`
