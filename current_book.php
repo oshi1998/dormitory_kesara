@@ -33,6 +33,11 @@ if (!empty($current_book)) {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$current_book]);
         $monthly = $stmt->fetchObject();
+
+        $sql = "SELECT * FROM repairs WHERE room_id=? AND customer_id=? ORDER BY created DESC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$monthly->monthly_room_id, $_SESSION['CUSTOMER_ID']]);
+        $repairs = $stmt->fetchAll();
     }
 }
 
@@ -48,19 +53,35 @@ if (!empty($current_book)) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>ข้อมูลการใช้งานขณะนี้ | DORMITORY KESARA</title>
+    <title>ข้อมูลห้องพักของฉัน | DORMITORY KESARA</title>
 
 
     <?php require_once('layouts/head.php'); ?>
 
     <style>
-        #myModal .modal-dialog {
-            -webkit-transform: translate(0, -50%);
-            -o-transform: translate(0, -50%);
-            transform: translate(0, -50%);
-            top: 70%;
-            margin: 0 auto;
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place front is invalid - may break your css so removed */
+            padding-top: 100px;
+            /* Location of the box - don't know what this does?  If it is to move your modal down by 100px, then just change top below to 100px and remove this*/
+            left: 0;
+            right: 0;
+            /* Full width (left and right 0) */
+            top: 0;
+            bottom: 0;
+            /* Full height top and bottom 0 */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+            z-index: 9999;
+            /* Sit on top - higher than any other z-index in your site*/
         }
+
 
         .progressbar {
             counter-reset: step;
@@ -135,8 +156,8 @@ if (!empty($current_book)) {
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-content">
-                        <h4>ข้อมูลการใช้งาน</h4>
-                        <h2>ข้อมูลการใช้งานขณะนี้ของคุณ</h2>
+                        <h4>ข้อมูลห้องพักของฉัน</h4>
+                        <h2>ดูข้อมูลห้องพัก และแจ้งซ่อมอุปกรณ์ภายในห้องพักของคุณ</h2>
                     </div>
                 </div>
             </div>
@@ -207,13 +228,13 @@ if (!empty($current_book)) {
                                     <td>
                                         <span class="badge badge-primary"><?= $daily->status ?></span>
                                         <?php if ($daily->status == "รอชำระค่ามัดจำ") : ?>
-                                            <a href="javascript:void(0)" onclick="deposit('<?= $daily->id ?>','<?= $daily->cost / 2 ?>')">คลิกชำระค่ามัดจำ!</a>
+                                            <a href="javascript:void(0)" onclick="dailyDeposit('<?= $daily->id ?>','<?= $daily->cost / 2 ?>')">คลิกชำระค่ามัดจำ!</a>
                                         <?php endif ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>เช็คอินเมื่อ</th>
-                                    <td><?= ($daily->check_in_datetime == "" || $boodailyk->check_in_datetime == null) ? 'ยังไม่ได้เช็คอินที่พัก' : $daily->check_in_datetime ?></td>
+                                    <td><?= ($daily->check_in_datetime == "" || $daily->check_in_datetime == null) ? 'ยังไม่ได้เช็คอินที่พัก' : $daily->check_in_datetime ?></td>
                                 </tr>
                                 <tr>
                                     <th>หมายเหตุ</th>
@@ -270,19 +291,74 @@ if (!empty($current_book)) {
                                     <td>
                                         <span class="badge badge-primary"><?= $monthly->status ?></span>
                                         <?php if ($monthly->status == "รอชำระค่ามัดจำ") : ?>
-                                            <a href="javascript:void(0)" onclick="deposit('<?= $monthly->id ?>','<?= $monthly->cost / 2 ?>')">คลิกชำระค่ามัดจำ!</a>
+                                            <a href="javascript:void(0)" onclick="monthlyDeposit('<?= $monthly->id ?>','<?= $monthly->cost / 2 ?>')">คลิกชำระค่ามัดจำ!</a>
                                         <?php endif ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>ย้ายเข้าเมื่อ</th>
-                                    <td><?= ($monthly->move_in_date == "" || $monthly->move_in_datet == null) ? 'ยังไม่ได้ย้ายเข้าที่พัก' : $monthly->move_in_date ?></td>
+                                    <td><?= ($monthly->move_in_date == "" || $monthly->move_in_date == null) ? 'ยังไม่ได้ย้ายเข้าที่พัก' : $monthly->move_in_date ?></td>
                                 </tr>
                                 <tr>
                                     <th>หมายเหตุ</th>
                                     <td><?= $monthly->note ?></td>
                                 </tr>
                             </table>
+
+
+                            <div class="col-12">
+                                <div class="text-center mb-5">
+                                    <h1>ประวัติการแจ้งซ่อมของคุณ ภายในห้อง <?= $monthly->monthly_room_id ?></h1>
+                                    <?php if ($monthly->status == "อยู่ระหว่างการเช่าห้อง") : ?>
+                                        <button class="btn btn-secondary" onclick="repair('<?= $monthly->monthly_room_id ?>')">
+                                            แจ้งซ่อมอุปกรณ์ภายในห้อง
+                                        </button>
+                                    <?php endif ?>
+                                </div>
+
+                                <?php if (count($repairs) > 0) : ?>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>วันที่แจ้ง</th>
+                                                    <th>ข้อมูลแจ้งซ่อม</th>
+                                                    <th>ภาพ</th>
+                                                    <th>สถานะ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($repairs as $repair) { ?>
+                                                    <tr>
+                                                        <td><?= $repair['created'] ?></td>
+                                                        <td>
+                                                            รหัส: <span class="badge badge-primary"><?= $repair['id'] ?></span>
+                                                            <br>
+                                                            <hr>
+                                                            หัวข้อ: <?= $repair['topic'] ?> <br>
+                                                            รายละเอียด: <?= $repair['description'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php if ($repair['img'] != "") : ?>
+                                                                <button class="btn btn-info" onclick="viewImage('<?= $repair['img'] ?>')">ดูภาพ</button>
+                                                            <?php else : ?>
+                                                                ไม่มีภาพ
+                                                            <?php endif ?>
+                                                        </td>
+                                                        <td><?= $repair['status'] ?></td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <?php else : ?>
+                                    <div class="alert alert-warning" role="alert">
+                                        <h4 class="alert-heading">คุณไม่มีประวัติการแจ้งซ่อมอุปกรณ์ ภายในห้อง <?= $monthly->monthly_room_id ?>!</h4>
+                                        <strong>หากมีปัญหาใดๆ สามารถแจ้งให้เราทราบได้ทุกเมื่อ ขอบคุณที่ใช้บริการ</strong>
+                                    </div>
+                                <?php endif ?>
+                            </div>
+
                         </div>
                     <?php endif ?>
                 <?php else : ?>
