@@ -45,7 +45,6 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 18);
                                 <a class="dropdown-item" href="profile.php">ข้อมูลส่วนตัว</a>
                                 <a class="dropdown-item" href="current_book.php">ห้องพักของฉัน</a>
                                 <a class="dropdown-item" href="mybooking.php">ประวัติการใช้งาน</a>
-                                <a class="dropdown-item" href="#">แจ้งซ่อมอุปกรณ์</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="logOut()">ออกจากระบบ</a>
                             </div>

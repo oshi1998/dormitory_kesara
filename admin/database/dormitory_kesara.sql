@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2021 at 11:02 AM
+-- Generation Time: Sep 25, 2021 at 11:56 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -42,7 +42,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`username`, `firstname`, `lastname`, `contact`, `password`, `created`, `updated`) VALUES
-('oshi', 'วงศ์วสันต์', 'ดวงเกตุ', '0972651700', '$2y$10$lgGxOoDeBRCzPBgcU8rQM.svzzD2x1cOIU3iXzFdqwOvynII0O7dK', '2021-09-23 05:58:18', '2021-09-23 07:22:40'),
+('admin', 'admin', 'admin', '', '$2y$10$ySh4QUVOd5GTgGb9hvqD4.lkF/6c24N6cUIxqEIx3YJuUngYLvibu', '2021-09-25 09:55:19', '2021-09-25 09:55:19'),
 ('prakorn', 'Prakorn', 'Junthalungzevorakul', '', '$2y$10$VMvz/MN84nAtrBsEd9WJQeucmkOR11EgWAUzxUROMyUfulvZnSzJC', '2021-09-23 07:16:09', '2021-09-23 07:16:09');
 
 -- --------------------------------------------------------
@@ -91,14 +91,6 @@ CREATE TABLE `customers` (
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'อัพเดตล่าสุด'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `customers`
---
-
-INSERT INTO `customers` (`id_card`, `firstname`, `lastname`, `gender`, `phone_number`, `address`, `email`, `password`, `current_book`, `status`, `active`, `created`, `updated`) VALUES
-('1459900696781', 'วงศ์วสันต์', 'ดวงเกตุ', 'ชาย', '0972651700', '', 'thephenome1998@gmail.com', '$2y$10$J9FHiu.nhwt3xzQfk9QAGewv83Q2EZ.gi0Ok91MMIvAJqlimrS6Pa', 'MB20210925-364', 'ว่าง', 'Enable', '2021-09-22 18:11:13', '2021-09-25 05:18:06'),
-('9999999999999', 'กฤตภาส', 'ฉัตรอุดมกุล', 'ชาย', '0972651700', '', 'test001@gmail.com', '$2y$10$XgbZ/ZiMUvTjJytOT5ZNCOV3fjiBo3.yvb0J8KiLPPOPbYfeJDuzy', '', 'ว่าง', 'Enable', '2021-09-23 08:36:02', '2021-09-25 07:20:58');
-
 -- --------------------------------------------------------
 
 --
@@ -122,17 +114,6 @@ CREATE TABLE `daily_books` (
   `created` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'วันที่สร้างข้อมูล',
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'อัพเดตล่าสุด'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `daily_books`
---
-
-INSERT INTO `daily_books` (`id`, `customer_id`, `daterange`, `duration`, `check_in`, `check_out`, `time`, `cost`, `check_in_datetime`, `check_out_datetime`, `daily_room_id`, `status`, `note`, `created`, `updated`) VALUES
-('DB20210924-795', '1459900696781', '2021-09-28 ถึง 2021-09-30', 2, '2021-09-28', '2021-09-30', '10:00:00', '600.00', NULL, NULL, 'A1', 'ยกเลิก', 'ชำระค่ามัดจำช้า', '2021-09-24 19:04:04', '2021-09-24 23:08:05'),
-('DB20210925-684', '9999999999999', '2021-10-01 ถึง 2021-10-05', 4, '2021-10-01', '2021-10-05', '12:00:00', '1200.00', '2021-09-25 08:47:08', '2021-09-25 08:47:16', 'A2', 'เสร็จสิ้น', '', '2021-09-25 01:45:16', '2021-09-25 01:47:16'),
-('DB20210925-744', '9999999999999', '2021-09-25 ถึง 2021-09-26', 1, '2021-09-25', '2021-09-26', '13:00:00', '300.00', NULL, NULL, 'A2', 'ยกเลิก', 'ห้องไม่พร้อมบริการ', '2021-09-24 22:55:33', '2021-09-24 23:02:59'),
-('DB20210925-780', '1459900696781', '2021-09-27 ถึง 2021-09-28', 1, '2021-09-27', '2021-09-28', '14:00:00', '300.00', '2021-09-25 08:28:43', '2021-09-25 08:34:36', 'A1', 'เสร็จสิ้น', '', '2021-09-24 23:09:07', '2021-09-25 01:34:36'),
-('DB20210925-826', '9999999999999', '2021-09-30 ถึง 2021-10-02', 2, '2021-09-30', '2021-10-02', '15:00:00', '600.00', '2021-09-25 14:18:26', '2021-09-25 14:19:09', 'A1', 'เสร็จสิ้น', '', '2021-09-25 04:13:34', '2021-09-25 07:19:09');
 
 -- --------------------------------------------------------
 
@@ -180,17 +161,6 @@ CREATE TABLE `deposits` (
   `created` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'วันที่สร้างข้อมูล',
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'อัพเดตล่าสุด'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `deposits`
---
-
-INSERT INTO `deposits` (`id`, `customer_id`, `book_id`, `amount`, `slip`, `receive_bank`, `receive_account_number`, `receive_owner`, `transfer_bank`, `transfer_account_number`, `transfer_owner`, `transfer_datetime`, `created`, `updated`) VALUES
-('DP20210925-214', '9999999999999', 'DB20210925-684', '600.00', 'DP20210925-214.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4666666612', 'กฤตภาส ฉัตรอุดมกุล', '2021-09-25 08:46:00', '2021-09-25 01:46:15', '2021-09-25 01:46:15'),
-('DP20210925-238', '1459900696781', 'DB20210925-780', '150.00', 'DP20210925-238.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', '2021-09-25 07:39:00', '2021-09-25 00:39:17', '2021-09-25 00:39:17'),
-('DP20210925-274', '9999999999999', 'MB20210925-670', '1250.00', 'DP20210925-274.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4666666612', 'กฤตภาส ฉัตรอุดมกุล', '2021-09-25 14:20:00', '2021-09-25 07:20:26', '2021-09-25 07:20:26'),
-('DP20210925-37', '9999999999999', 'DB20210925-826', '300.00', 'DP20210925-37.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4666666612', 'กฤตภาส ฉัตรอุดมกุล', '2021-09-25 14:18:00', '2021-09-25 07:18:08', '2021-09-25 07:18:08'),
-('DP20210925-482', '1459900696781', 'MB20210925-364', '1500.00', 'DP20210925-482.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', '2021-09-25 12:26:00', '2021-09-25 05:26:24', '2021-09-25 05:26:24');
 
 -- --------------------------------------------------------
 
@@ -241,15 +211,6 @@ CREATE TABLE `monthly_books` (
   `created` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'วันที่สร้างข้อมูล',
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'อัพเดตล่าสุด'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `monthly_books`
---
-
-INSERT INTO `monthly_books` (`id`, `customer_id`, `schedule_move_in`, `move_in_date`, `move_out_date`, `cost`, `monthly_room_id`, `status`, `note`, `created`, `updated`) VALUES
-('MB20210925-364', '1459900696781', '2021-10-01 15:20:00', '2021-09-25', NULL, '3000.00', 'B7', 'อยู่ระหว่างการเช่าห้อง', '', '2021-09-25 05:18:06', '2021-09-25 05:29:06'),
-('MB20210925-591', '1459900696781', '2021-10-01 13:00:00', NULL, NULL, '3000.00', 'B11', 'ยกเลิก', 'ชำระค่ามัดจำช้า', '2021-09-25 03:53:37', '2021-09-25 05:15:13'),
-('MB20210925-670', '9999999999999', '2021-10-02 15:20:00', '2021-09-25', '2021-09-25', '2500.00', 'A3', 'เสร็จสิ้น', '', '2021-09-25 07:19:42', '2021-09-25 07:20:58');
 
 -- --------------------------------------------------------
 
@@ -315,14 +276,6 @@ CREATE TABLE `repairs` (
   `created` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'วันที่สร้างข้อมูล',
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'อัพเดตล่าสุด'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `repairs`
---
-
-INSERT INTO `repairs` (`id`, `topic`, `description`, `room_id`, `customer_id`, `img`, `status`, `note`, `created`, `updated`) VALUES
-('RP20210925-248', 'ไฟระเบียงไม่ติด', 'ไฟระเบียงไม่ติด', 'B7', '1459900696781', '', 'ปฏิเสธ', 'ไม่มีช่าง', '2021-09-25 07:57:08', '2021-09-25 07:58:11'),
-('RP20210925-802', 'ไฟห้องน้ำไม่ติด', 'ไฟห้องน้ำไม่ติด', 'B7', '1459900696781', 'RP20210925-802.jpg', 'รับเรื่องแล้ว', '', '2021-09-25 07:10:51', '2021-09-25 07:56:30');
 
 -- --------------------------------------------------------
 
