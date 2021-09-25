@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     require_once('../connect.php');
 
 
-    $sql = "SELECT monthly_rooms.id,name,floor,active,img_position,roomtypes.type,password FROM monthly_rooms,roomtypes WHERE monthly_rooms.type=roomtypes.id ORDER BY monthly_rooms.created DESC";
+    $sql = "SELECT monthly_rooms.id,name,floor,active,img_position,roomtypes.type FROM monthly_rooms,roomtypes WHERE monthly_rooms.type=roomtypes.id ORDER BY monthly_rooms.created DESC";
     $result = $pdo->query($sql);
 
     if ($result) {

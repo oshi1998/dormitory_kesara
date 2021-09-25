@@ -73,7 +73,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <thead>
                                             <tr>
                                                 <th>เลขห้อง (สำหรับเข้าสู่ระบบ)</th>
-                                                <th>รหัสผ่าน</th>
                                                 <th>ชื่อประเภท</th>
                                                 <th>ชั้น</th>
                                                 <th>ภาพตำแหน่งห้อง</th>

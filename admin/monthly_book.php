@@ -73,11 +73,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <span class="badge badge-danger" id="status3"></span>
                                         </button>
                                         <button type="button" class="btn btn-outline-success" id="btnStatus4" onclick="readByStatus4()">
-                                            <span>รอเช็คอิน</span>
+                                            <span>รอย้ายเข้า</span>
                                             <span class="badge badge-danger" id="status4"></span>
                                         </button>
                                         <button type="button" class="btn btn-outline-success" id="btnStatus5" onclick="readByStatus5()">
-                                            <span>อยู่ระหว่างการเช็คอิน</span>
+                                            <span>อยู่ระหว่างการเช่าห้อง</span>
                                             <span class="badge badge-danger" id="status5"></span>
                                         </button>
                                         <button type="button" class="btn btn-outline-success" id="btnStatus6" onclick="readByStatus6()">

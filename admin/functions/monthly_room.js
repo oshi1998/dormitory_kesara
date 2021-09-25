@@ -12,7 +12,6 @@ function read() {
                 data_html += `
                 <tr>
                     <td>${element['id']}</td>
-                    <td>${element['password']}</td>
                     <td>${element['name']}</td>
                     <td>${element['floor']}</td>
                     <td>
@@ -93,10 +92,6 @@ function add() {
 
             <div class="form-group">
                 <input type="text" class="form-control" name="id" id="inputId" onchange="checkId(event.target.value)" placeholder="เลขห้อง (ซ้ำกันไม่ได้)" required>
-            </div>
-
-            <div class="form-group">
-                <input type="text" class="form-control" name="password" placeholder="รหัสผ่าน" required>
             </div>
 
             <div class="form-group">
@@ -233,11 +228,6 @@ function edit(id) {
                 <div class="form-group">
                     <label>ชั้น</label>
                     <input type="text" class="form-control" name="floor" value="${res.data['floor']}" placeholder="ชั้น" required>
-                </div>
-
-                <div class="form-group">
-                    <label>รหัสผ่าน</label>
-                    <input type="text" class="form-control" name="password" value="${res.data['password']}" placeholder="รหัสผ่าน" required>
                 </div>
 
                 <div class="form-group">

@@ -9,10 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         http_response_code(412);
         echo json_encode(['status' => false, 'message' => 'กรุณากรอกข้อมูลเลขห้อง']);
         exit;
-    } else if (empty($_POST['password'])) {
-        http_response_code(412);
-        echo json_encode(['status' => false, 'message' => 'กรุณากรอกรหัสผ่าน']);
-        exit;
     } else if (empty($_POST['type'])) {
         http_response_code(412);
         echo json_encode(['status' => false, 'message' => 'กรุณาเลือกประเภทห้องพัก']);
@@ -38,10 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $file = $_POST['old_img'];
     }
 
-    $sql = "UPDATE monthly_rooms SET password=:password,type=:type,floor=:floor,img_position=:img WHERE id=:id";
+    $sql = "UPDATE monthly_rooms SET type=:type,floor=:floor,img_position=:img WHERE id=:id";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
-        'password' => $_POST['password'],
         'type' => $_POST['type'],
         'floor' => $_POST['floor'],
         'id' => $_POST['id'],
