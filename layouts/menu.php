@@ -19,7 +19,7 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 18);
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)">บริการ</a>
+                        <a class="nav-link <?= ($current_file == 'services.php') ? 'active' : '' ?>" href="services.php">บริการ</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= ($current_file == 'room.php') ? 'active' : '' ?>" href="room.php">ห้องพัก</a>

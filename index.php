@@ -33,20 +33,20 @@ session_start();
     <div class="owl-banner owl-carousel">
       <div class="banner-item-01">
         <div class="text-content">
-          <h4>Best Offer</h4>
-          <h2>New Arrivals On Sale</h2>
+          <h4>ยินดีต้อนรับ</h4>
+          <h2>หอพักเกศรานครสวรรค์</h2>
         </div>
       </div>
       <div class="banner-item-02">
         <div class="text-content">
-          <h4>Flash Deals</h4>
-          <h2>Get your best products</h2>
+          <h4>ยินดีต้อนรับ</h4>
+          <h2>หอพักเกศรานครสวรรค์</h2>
         </div>
       </div>
       <div class="banner-item-03">
         <div class="text-content">
-          <h4>Last Minute</h4>
-          <h2>Grab last minute deals</h2>
+          <h4>ยินดีต้อนรับ</h4>
+          <h2>หอพักเกศรานครสวรรค์</h2>
         </div>
       </div>
     </div>
@@ -63,21 +63,25 @@ session_start();
         </div>
         <div class="col-md-6">
           <div class="left-content">
-            <h4>Looking for the best products?</h4>
-            <p><a rel="nofollow" href="https://templatemo.com/tm-546-sixteen-clothing" target="_parent">This template</a> is free to use for your business websites. However, you have no permission to redistribute the downloadable ZIP file on any template collection website. <a rel="nofollow" href="https://templatemo.com/contact">Contact us</a> for more info.</p>
+            <h4>หอพักเกศรานครสวรรค์</h4>
+            <p><a rel="#fff">ห้องพักว่างให้เช่าเป็นรายเดือนกับรายวัน รายเดือนตกอยู่ที่ราคา 2500 - 3000 บาท เฟอร์นิเจอร์มีโทรทัศน์ ตู้เย็น แอร์ พัดลม เครื่องทำน้ำอุ่น สามารถติดต่อสอบถามโทร 086-4494774 <br> LINE : @0864494774
+                Email : PrasertjJpong@hotmail.com</p></a>
             <ul class="featured-list">
-              <li><a href="#">Lorem ipsum dolor sit amet</a></li>
-              <li><a href="#">Consectetur an adipisicing elit</a></li>
-              <li><a href="#">It aquecorporis nulla aspernatur</a></li>
-              <li><a href="#">Corporis, omnis doloremque</a></li>
-              <li><a href="#">Non cum id reprehenderit</a></li>
+              <li>สิ่งอำนวยความสะดวก</a></li>
+              <li><a href="#">ร้านอาหาร</a></li>
+              <li><a href="#">ตู้น้ำหยอดเหรียญ</a></li>
+              <li><a href="#">เครื่องซักผ้าหยอดเหรียญ</a></li>
+              <li><a href="#">อินเตอร์เน็ต Wifi</a></li>
+              <li><a href="#">กล้องวงจรปิด</a></li>
+              <li><a href="#">ที่จอดรถยนต์ กับ มอเตอร์ไซต์</a></li>
+              <li><a href="#">ร้านเสริมสวย</a></li>
+
             </ul>
-            <a href="about.html" class="filled-button">Read More</a>
           </div>
         </div>
         <div class="col-md-6">
           <div class="right-image">
-            <img src="assets/images/feature-image.jpg" alt="">
+            <img src="assets/images/map.png" alt="">
           </div>
         </div>
       </div>

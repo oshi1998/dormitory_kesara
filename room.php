@@ -28,12 +28,27 @@ $rooms = $stmt->fetchAll();
   <?php require_once('layouts/head.php'); ?>
 
   <style>
-    #myModal .modal-dialog {
-      -webkit-transform: translate(0, -50%);
-      -o-transform: translate(0, -50%);
-      transform: translate(0, -50%);
-      top: 50%;
-      margin: 0 auto;
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place front is invalid - may break your css so removed */
+      padding-top: 100px;
+      /* Location of the box - don't know what this does?  If it is to move your modal down by 100px, then just change top below to 100px and remove this*/
+      left: 0;
+      right: 0;
+      /* Full width (left and right 0) */
+      top: 0;
+      bottom: 0;
+      /* Full height top and bottom 0 */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+      z-index: 9999;
+      /* Sit on top - higher than any other z-index in your site*/
     }
   </style>
 
@@ -54,8 +69,8 @@ $rooms = $stmt->fetchAll();
       <div class="row">
         <div class="col-md-12">
           <div class="text-content">
-            <h4>new arrivals</h4>
-            <h2>sixteen products</h2>
+            <h4>ห้องพัก</h4>
+            <h2>ประเภทห้องพัก และราคา</h2>
           </div>
         </div>
       </div>

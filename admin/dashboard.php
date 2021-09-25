@@ -19,7 +19,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" onload="count()">
     <div class="wrapper">
 
         <!-- Include Navigator file -->
@@ -53,8 +53,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <!-- small box -->
                             <div class="small-box bg-info">
                                 <div class="inner">
-                                    <h3 id="num_adm"></h3>
-
+                                    <h3 id="c1"></h3>
                                     <p>ผู้ดูแลระบบ</p>
                                 </div>
                                 <div class="icon">
@@ -68,14 +67,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <!-- small box -->
                             <div class="small-box bg-success">
                                 <div class="inner">
-                                    <h3 id="num_mem"></h3>
-
-                                    <p>สมาชิก</p>
+                                    <h3 id="c2"></h3>
+                                    <p>ลูกค้า</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="member.php" class="small-box-footer">จัดการข้อมูล <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="customer.php" class="small-box-footer">จัดการข้อมูล <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                         <!-- ./col -->
@@ -83,14 +81,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <!-- small box -->
                             <div class="small-box bg-warning">
                                 <div class="inner">
-                                    <h3 id="num_type"></h3>
-
-                                    <p>ประเภทสถานที่ท่องเที่ยว</p>
+                                    <h3 id="c3"></h3>
+                                    <p>ห้องพักรายวัน</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
                                 </div>
-                                <a href="attraction_types.php" class="small-box-footer">จัดการข้อมูล <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="daily_room.php" class="small-box-footer">จัดการข้อมูล <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                         <!-- ./col -->
@@ -98,14 +95,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <!-- small box -->
                             <div class="small-box bg-danger">
                                 <div class="inner">
-                                    <h3 id="num_att"></h3>
-
-                                    <p>สถานที่ท่องเที่ยว</p>
+                                    <h3 id="c4"></h3>
+                                    <p>ห้องพักรายเดือน</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-pie-graph"></i>
                                 </div>
-                                <a href="attractions.php" class="small-box-footer">จัดการข้อมูล <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="monthly_room.php" class="small-box-footer">จัดการข้อมูล <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                         <!-- ./col -->
@@ -131,6 +127,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.min.js"></script>
+
+    <script src="functions/dashboard.js"></script>
 </body>
 
 </html>
