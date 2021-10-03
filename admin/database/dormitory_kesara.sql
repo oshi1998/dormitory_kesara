@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2021 at 08:23 PM
+-- Generation Time: Oct 03, 2021 at 09:59 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -97,8 +97,9 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`username`, `id_card`, `firstname`, `lastname`, `gender`, `phone_number`, `address`, `email`, `password`, `current_book`, `status`, `active`, `created`, `updated`) VALUES
-('oshi', '', 'วงศ์วสันต์', 'ดวงเกตุ', 'ชาย', '0972651700', '', 'thephenome1998@gmail.com', '$2y$10$fDseGoL5BZRPXQeJPapRy.tIlqOXGXyC5Us8JzHO9vceL9pVwATCm', '', 'ว่าง', 'Enable', '2021-10-03 16:32:48', '2021-10-03 18:15:45'),
-('test', '', 'วงศ์วสันต์', 'ดวงเกตุ', 'ชาย', '0972651700', '', 'test001@gmail.com', '$2y$10$rUdB.dSKMTYVSGQ2BdJoiuZn7OR6cChfSJkg2iKMG21SxkbxgYqpe', '', 'ว่าง', 'Enable', '2021-10-03 17:41:17', '2021-10-03 17:41:17');
+('oshi', '', 'วงศ์วสันต์', 'ดวงเกตุ', 'ชาย', '0972651700', '', 'thephenome1998@gmail.com', '$2y$10$fDseGoL5BZRPXQeJPapRy.tIlqOXGXyC5Us8JzHO9vceL9pVwATCm', 'MB20211003-46', 'ว่าง', 'Enable', '2021-10-03 16:32:48', '2021-10-03 19:53:25'),
+('test', '', 'วงศ์วสันต์', 'ดวงเกตุ', 'ชาย', '0972651700', '', 'test001@gmail.com', '$2y$10$rUdB.dSKMTYVSGQ2BdJoiuZn7OR6cChfSJkg2iKMG21SxkbxgYqpe', '', 'ว่าง', 'Enable', '2021-10-03 17:41:17', '2021-10-03 17:41:17'),
+('ufax36z102222', '', 'เกริกพล', 'สัมฤทธิ์', 'ชาย', '0972651700', '', 'el_fenomenos1998@hotmail.com', '$2y$10$sNqZUARdU4.Qz47yGppi4u13qBQSMtdYhdiirHxWFRrNrax26lJvC', '', 'ว่าง', 'Enable', '2021-10-03 19:32:32', '2021-10-03 19:32:32');
 
 -- --------------------------------------------------------
 
@@ -225,7 +226,7 @@ INSERT INTO `images` (`id`, `img`, `type_id`, `created`) VALUES
 CREATE TABLE `monthly_books` (
   `id` varchar(255) NOT NULL COMMENT 'รหัส',
   `customer_username` varchar(255) NOT NULL COMMENT 'ชื่อผู้ใช้งานลูกค้า',
-  `schedule_move_in` datetime DEFAULT NULL COMMENT 'กำหนดการจะย้ายเข้า',
+  `schedule_move_in` date DEFAULT NULL COMMENT 'กำหนดการจะย้ายเข้า',
   `move_in_date` date DEFAULT NULL COMMENT 'วันที่ย้ายเข้า',
   `move_out_date` date DEFAULT NULL COMMENT 'วันที่ย้ายออก',
   `cost` decimal(10,2) NOT NULL COMMENT 'ค่าที่พัก',
@@ -241,7 +242,8 @@ CREATE TABLE `monthly_books` (
 --
 
 INSERT INTO `monthly_books` (`id`, `customer_username`, `schedule_move_in`, `move_in_date`, `move_out_date`, `cost`, `monthly_room_id`, `status`, `note`, `created`, `updated`) VALUES
-('MB20211003-487', 'oshi', '2021-10-09 13:00:00', '2021-10-04', '2021-10-04', '3000.00', 'B7', 'เสร็จสิ้น', '', '2021-10-03 18:06:54', '2021-10-03 18:15:45');
+('MB20211003-46', 'oshi', '2021-10-04', NULL, NULL, '3000.00', 'A11', 'รออนุมัติ', '', '2021-10-03 19:53:25', '2021-10-03 19:53:25'),
+('MB20211003-487', 'oshi', '2021-10-09', '2021-10-04', '2021-10-04', '3000.00', 'B7', 'เสร็จสิ้น', '', '2021-10-03 18:06:54', '2021-10-03 18:15:45');
 
 -- --------------------------------------------------------
 

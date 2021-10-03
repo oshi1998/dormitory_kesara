@@ -216,7 +216,7 @@ if (empty($row->current_book)) {
 
                         <div class="form-group">
                             <label>กำหนดการที่คุณจะย้ายของเข้า</label>
-                            <input type="datetime-local" class="form-control" id="inputMoveIn">
+                            <input type="date" class="form-control" id="inputMoveIn">
                         </div>
 
                         <br>
