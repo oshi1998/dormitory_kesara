@@ -7,17 +7,16 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     session_start();
 
-    $sql = "INSERT INTO daily_books (id,customer_id,daterange,duration,check_in,check_out,time,cost,daily_room_id,status)
-    VALUES (:id,:customer,:daterange,:duration,:checkin,:checkout,:time,:cost,:room,:status)";
+    $sql = "INSERT INTO daily_books (id,customer_username,daterange,duration,check_in,check_out,cost,daily_room_id,status)
+    VALUES (:id,:customer,:daterange,:duration,:checkin,:checkout,:cost,:room,:status)";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
         'id' => $_SESSION['MYBOOK']['ID'],
-        'customer' => $_SESSION['CUSTOMER_ID'],
+        'customer' => $_SESSION['CUSTOMER_USERNAME'],
         'daterange' => $_SESSION['MYBOOK']['DATERANGE'],
         'duration' => $_SESSION['MYBOOK']['DURATION'],
         'checkin' => $_SESSION['MYBOOK']['CHECK_IN'],
         'checkout' => $_SESSION['MYBOOK']['CHECK_OUT'],
-        'time' => $_SESSION['MYBOOK']['TIME'],
         'cost' => $_SESSION['MYBOOK']['COST'],
         'room' => $_SESSION['MYBOOK']['ROOM_ID'],
         'status' => "รออนุมัติ"
@@ -25,11 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     if($result){
 
-        $sql = "UPDATE customers SET current_book=:cb WHERE id_card = :id";
+        $sql = "UPDATE customers SET current_book=:cb WHERE username = :usr";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             'cb' => $_SESSION['MYBOOK']['ID'],
-            'id' => $_SESSION['CUSTOMER_ID']
+            'usr' => $_SESSION['CUSTOMER_USERNAME']
         ]);
 
         unset($_SESSION['MYBOOK']);

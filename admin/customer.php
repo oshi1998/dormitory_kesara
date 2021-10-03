@@ -71,7 +71,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <table id="dataTable" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>รหัสบัตรประชาชน</th>
+                                                <th>ชื่อผู้ใช้งาน</th>
                                                 <th>ชื่อจริง-นามสกุล</th>
                                                 <th>ข้อมูลติดด่อ</th>
                                                 <th>สถานะบัญชี</th>

@@ -63,13 +63,13 @@ session_start();
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="id_card" id="inputIdCard" minlength="13" maxlength="13" placeholder="เลขบัตรประจำตัวประชาชน (สำหรับเข้าสู่ระบบ)" onchange="checkIdCard(event.target.value)">
+                            <input type="text" class="form-control" name="username" id="inputUsername" placeholder="ชื่อผู้ใช้งาน (สำหรับเข้าสู่ระบบ)" onchange="checkUsername(event.target.value)" required>
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" name="password" placeholder="รหัสผ่าน" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="phone_number" minlength="10" placeholder="เบอร์โทร (มากกว่า 1 เบอร์ได้)" required>
+                            <input type="text" class="form-control" name="phone_number" minlength="10" maxlength="10" pattern="\d*" placeholder="เบอร์โทร" title="เฉพาะตัวเลขเท่านั้น" required>
                         </div>
                         <div class="form-group">
                             <textarea class="form-control" name="address" placeholder="ที่อยู่ (ไม่บังคับ)"></textarea>

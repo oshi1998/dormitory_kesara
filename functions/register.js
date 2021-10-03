@@ -27,6 +27,35 @@ function checkIdCard(id_card) {
     });
 }
 
+function checkUsername(username){
+    $.ajax({
+        method: "post",
+        url: "api/register/examine.php",
+        data: {
+            "username": username,
+            "examine": "username"
+        }
+    }).done(function (res) {
+        console.log(res);
+
+        if (res.examine == "Not Empty") {
+            $('#heading').append(
+                `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>ผิดพลาด!</strong> ${res.message}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                `
+            );
+            $('#inputUsername').val("").focus();
+        }
+    }).fail(function (res) {
+        console.log(res);
+    });
+}
+
 function checkEmail(email) {
     $.ajax({
         method: "post",

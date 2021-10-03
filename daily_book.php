@@ -4,9 +4,9 @@ session_start();
 require_once('api/connect.php');
 
 
-$sql = "SELECT current_book FROM customers WHERE id_card = ?";
+$sql = "SELECT current_book FROM customers WHERE username = ?";
 $stmt = $pdo->prepare($sql);
-$stmt->execute([$_SESSION['CUSTOMER_ID']]);
+$stmt->execute([$_SESSION['CUSTOMER_USERNAME']]);
 $row = $stmt->fetchObject();
 
 if (empty($row->current_book)) {
@@ -81,6 +81,10 @@ if (empty($row->current_book)) {
     <link rel="stylesheet" href="vendor/daterangepicker/daterangepicker.css">
 
     <style>
+        .room-id {
+            -webkit-text-stroke: 1px black; /* width and color */
+            color: red;
+        }
         .modal {
             display: none;
             /* Hidden by default */
@@ -245,15 +249,6 @@ if (empty($row->current_book)) {
                                     <br>
 
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">เลือกเวลา</label>
-                                        <div class="col-sm-10">
-                                            <input type="time" class="form-control" name="time" id="inputTime" required>
-                                        </div>
-                                    </div>
-
-                                    <br>
-
-                                    <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">เลือกชนิดห้องรายวัน </label>
                                         <div class="col-sm-10">
                                             <select class="form-control" name="type" id="inputType" required>
@@ -290,8 +285,8 @@ if (empty($row->current_book)) {
                                 <?php foreach ($rooms as $room) { ?>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="product-item">
-                                            <a href="javascript:void(0)" onclick="viewDetail('<?= $room['id'] ?>')">
-                                                <img src="admin/dist/img/room/<?= $room['img'] ?>">
+                                            <a class="room-id text-center" href="javascript:void(0)" onclick="viewDetail('<?= $room['id'] ?>')">
+                                                <h1><?= $room['id'] ?></h1>
                                             </a>
                                             <div class="down-content">
                                                 <a href="javascript:void(0)" onclick="viewDetail('<?= $room['id'] ?>')">
@@ -354,11 +349,11 @@ if (empty($row->current_book)) {
                             </tr>
                             <tr>
                                 <th>เช็คอิน</th>
-                                <td><?= $_SESSION['MYBOOK']['CHECK_IN'] ?> เวลา <?= $_SESSION['MYBOOK']['TIME'] ?> น.</td>
+                                <td><?= $_SESSION['MYBOOK']['CHECK_IN'] ?></td>
                             </tr>
                             <tr>
                                 <th>เช็คเอาท์</th>
-                                <td><?= $_SESSION['MYBOOK']['CHECK_OUT'] ?> เวลา <?= $_SESSION['MYBOOK']['TIME'] ?> น.</td>
+                                <td><?= $_SESSION['MYBOOK']['CHECK_OUT'] ?></td>
                             </tr>
                             <tr>
                                 <th>ค่ามัดจำจองที่พัก 50% (บาท)</th>

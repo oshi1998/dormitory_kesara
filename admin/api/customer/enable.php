@@ -6,16 +6,16 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     require_once('../connect.php');
 
 
-    $sql = "UPDATE customers SET active = :active WHERE id_card = :id";
+    $sql = "UPDATE customers SET active = :active WHERE username = :username";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
         'active' => "Enable",
-        'id' => $_GET['id_card']
+        'username' => $_GET['username']
     ]);
 
     if ($result) {
         http_response_code(200);
-        echo json_encode(['status' => true, 'message' => "เปิดใช้งานบัญชี $_GET[id_card] สำเร็จ"]);
+        echo json_encode(['status' => true, 'message' => "เปิดใช้งานบัญชี $_GET[username] สำเร็จ"]);
         exit;
     } else {
         http_response_code(412);

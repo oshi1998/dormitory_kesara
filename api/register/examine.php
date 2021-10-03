@@ -40,6 +40,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             } else {
                 http_response_code(412);
             }
+        } else if ($_POST['examine'] == 'username') {
+            $sql = "SELECT username FROM customers WHERE username=?";
+            $stmt = $pdo->prepare($sql);
+            $result = $stmt->execute([$_POST['username']]);
+
+            if ($result) {
+                $row = $stmt->fetchObject();
+                if (empty($row)) {
+                    http_response_code(200);
+                    echo json_encode(['status' => true, 'examine' => 'Empty']);
+                } else {
+                    http_response_code(200);
+                    echo json_encode(['status' => true, 'examine' => 'Not Empty', 'message' => "ชื่อผู้ใช้งาน $_POST[username] ถูกใช้งานแล้ว"]);
+                }
+            } else {
+                http_response_code(412);
+            }
         }
     } else {
         http_response_code(412);

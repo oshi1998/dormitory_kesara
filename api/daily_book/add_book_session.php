@@ -12,7 +12,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     $_SESSION['MYBOOK']['DURATION'] =$_POST['duration'];
     $_SESSION['MYBOOK']['CHECK_IN'] =$_POST['checkin'];
     $_SESSION['MYBOOK']['CHECK_OUT'] =$_POST['checkout'];
-    $_SESSION['MYBOOK']['TIME'] = $_POST['time'];
     $_SESSION['MYBOOK']['ROOM_TYPE'] = $_POST['type'];
     $_SESSION['MYBOOK']['COST'] = 0.00;
     $_SESSION['MYBOOK']['ROOM_ID'] = '';

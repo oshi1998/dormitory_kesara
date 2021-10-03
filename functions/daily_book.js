@@ -80,22 +80,9 @@ function viewDetail(id) {
 
 function goStep2() {
 
-    let time = $('#inputTime').val();
     let type = $('#inputType').val();
-
-    if (time == "" || time == null) {
-        $('#showAlert1').html(
-            `
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>ไม่สามารถไปขั้นตอนต่อไปได้!</strong> กรุณาระบุเวลา
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            `
-        );
-        $('#inputTime').focus();
-    } else if (type == "" || type == null) {
+    
+    if (type == "" || type == null) {
         $('#showAlert1').html(
             `
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">

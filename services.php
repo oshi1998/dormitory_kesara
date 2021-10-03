@@ -34,7 +34,7 @@ require_once('api/connect.php');
   <?php require_once('layouts/menu.php'); ?>
 
   <!-- Page Content -->
-  <div class="page-heading products-heading header-text">
+  <div class="page-heading products-heading header-text"> <!-- products-heading -->
     <div class="container">
       <div class="row">
         <div class="col-md-12">

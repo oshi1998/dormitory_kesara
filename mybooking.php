@@ -3,19 +3,19 @@ session_start();
 
 require_once('api/connect.php');
 
-$sql = "SELECT * FROM daily_books WHERE customer_id=? ORDER BY created DESC";
+$sql = "SELECT * FROM daily_books WHERE customer_username=? ORDER BY created DESC";
 $stmt =  $pdo->prepare($sql);
-$stmt->execute([$_SESSION['CUSTOMER_ID']]);
+$stmt->execute([$_SESSION['CUSTOMER_USERNAME']]);
 $dailys = $stmt->fetchAll();
 
-$sql = "SELECT * FROM monthly_books WHERE customer_id=? ORDER BY created DESC";
+$sql = "SELECT * FROM monthly_books WHERE customer_username=? ORDER BY created DESC";
 $stmt =  $pdo->prepare($sql);
-$stmt->execute([$_SESSION['CUSTOMER_ID']]);
+$stmt->execute([$_SESSION['CUSTOMER_USERNAME']]);
 $monthlys = $stmt->fetchAll();
 
-$sql = "SELECT * FROM repairs WHERE customer_id=? ORDER BY created DESC";
+$sql = "SELECT * FROM repairs WHERE customer_username=? ORDER BY created DESC";
 $stmt =  $pdo->prepare($sql);
-$stmt->execute([$_SESSION['CUSTOMER_ID']]);
+$stmt->execute([$_SESSION['CUSTOMER_USERNAME']]);
 $repairs = $stmt->fetchAll();
 
 ?>

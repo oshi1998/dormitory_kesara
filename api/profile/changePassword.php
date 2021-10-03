@@ -22,20 +22,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     } else {
         session_start();
 
-        $sql = "SELECT * FROM customers WHERE id_card=?";
+        $sql = "SELECT * FROM customers WHERE username=?";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$_SESSION['CUSTOMER_ID']]);
+        $stmt->execute([$_SESSION['CUSTOMER_USERNAME']]);
         $row = $stmt->fetchObject();
 
         if (!empty($row)) {
             if (password_verify($_POST['old_password'], $row->password)) {
 
                 $password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
-                $sql = "UPDATE customers SET password=:new_password WHERE id_card=:id";
+                $sql = "UPDATE customers SET password=:new_password WHERE username=:usr";
                 $stmt = $pdo->prepare($sql);
                 $result = $stmt->execute([
                     'new_password' => $password,
-                    'id' => $_SESSION['CUSTOMER_ID']
+                    'usr' => $_SESSION['CUSTOMER_USERNAME']
                 ]);
 
                 if ($result) {

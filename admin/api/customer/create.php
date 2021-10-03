@@ -16,9 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         http_response_code(412);
         echo json_encode(['status' => false, 'message' => 'กรุณาเลือกเพศ ให้ถูกต้อง']);
         exit();
-    } else if (empty($_POST['id_card'])) {
+    } else if (empty($_POST['username'])) {
         http_response_code(412);
-        echo json_encode(['status' => false, 'message' => 'กรุณากรอกข้อมูลเลขบัตรประชาชน ให้ถูกต้อง']);
+        echo json_encode(['status' => false, 'message' => 'กรุณากรอกข้อมูลชื่อผู้ใช้งาน ให้ถูกต้อง']);
         exit();
     } else if (empty($_POST['phone_number'])) {
         http_response_code(412);
@@ -36,11 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO customers (id_card,firstname,lastname,gender,phone_number,address,email,password,status)
-        VALUES (:id,:firstname,:lastname,:gender,:phone,:address,:email,:password,:status)";
+    $sql = "INSERT INTO customers (username,firstname,lastname,gender,phone_number,address,email,password,status)
+        VALUES (:username,:firstname,:lastname,:gender,:phone,:address,:email,:password,:status)";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
-        'id' => $_POST['id_card'],
+        'username' => $_POST['username'],
         'firstname' => $_POST['firstname'],
         'lastname' => $_POST['lastname'],
         'gender' => $_POST['gender'],

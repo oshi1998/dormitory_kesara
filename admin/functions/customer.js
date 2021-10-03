@@ -9,7 +9,7 @@ function read() {
         res.data.forEach(element => {
             data_html += `
                 <tr>
-                    <td>${element['id_card']}</td>
+                    <td>${element['username']}</td>
                     <td>${element['firstname'] + " " + element['lastname']}</td>
                     <td>
                         ที่อยู่ : ${element['address']} <br>
@@ -25,10 +25,10 @@ function read() {
                     <span class="badge badge-pill badge-success">${element['active']}</span>
                     </td>
                     <td>
-                        <button class="btn btn-primary" onclick="edit('${element['id_card']}')">
+                        <button class="btn btn-primary" onclick="edit('${element['username']}')">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="btn btn-danger" onclick="disable('${element['id_card']}')">
+                        <button class="btn btn-danger" onclick="disable('${element['username']}')">
                             <i class="fas fa-user-slash"></i>
                         </button>
                     </td>
@@ -41,10 +41,10 @@ function read() {
                         <span class="badge badge-pill badge-danger">${element['active']}</span>
                     </td>
                     <td>
-                        <button class="btn btn-primary" onclick="edit('${element['id_card']}')">
+                        <button class="btn btn-primary" onclick="edit('${element['username']}')">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="btn btn-success" onclick="enable('${element['id_card']}')">
+                        <button class="btn btn-success" onclick="enable('${element['username']}')">
                             <i class="fas fa-user-check"></i>
                         </button>
                     </td>
@@ -89,13 +89,13 @@ function add() {
             </select>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="id_card" id="inputIdCard" minlength="13" maxlength="13" placeholder="เลขบัตรประจำตัวประชาชน (สำหรับเข้าสู่ระบบ)" onchange="checkIdCard(event.target.value)">
+            <input type="text" class="form-control" name="username" id="inputUsername" placeholder="ชื่อผู้ใช้งาน (สำหรับเข้าสู่ระบบ)" onchange="checkUsername(event.target.value)">
         </div>
         <div class="form-group">
             <input type="password" class="form-control" name="password" placeholder="รหัสผ่าน" required>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="phone_number" minlength="10" placeholder="เบอร์โทร (มากกว่า 1 เบอร์ได้)" required>
+            <input type="text" class="form-control" name="phone_number" minlength="10" maxlength="10" pattern="\d*" placeholder="เบอร์โทร" required>
         </div>
         <div class="form-group">
             <textarea class="form-control" name="address" placeholder="ที่อยู่ (ไม่บังคับ)"></textarea>
@@ -113,12 +113,12 @@ function add() {
     $('#myModal').modal('show');
 }
 
-function edit(id_card) {
+function edit(username) {
     $.ajax({
         method: "post",
-        url: "api/customer/readById.php",
+        url: "api/customer/readByUsername.php",
         data: {
-            "id_card": id_card
+            "username": username
         }
     }).done(function (res) {
         console.log(res);
@@ -128,7 +128,7 @@ function edit(id_card) {
         <form id="updateForm">
 
             <div clas>
-                <input type="text" class="form-control" name="id_card" value="${id_card}" readonly hidden>
+                <input type="text" class="form-control" name="username" value="${username}" readonly hidden>
             </div>
 
             <div class="form-group">
@@ -144,7 +144,7 @@ function edit(id_card) {
                 </select>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="phone_number" value="${res.data['phone_number']}" minlength="10" placeholder="เบอร์โทร (มากกว่า 1 เบอร์ได้)" required>
+                <input type="text" class="form-control" name="phone_number" value="${res.data['phone_number']}" minlength="10" maxlength="10" pattern="\d*" placeholder="เบอร์โทร" required>
             </div>
             <div class="form-group">
                 <textarea class="form-control" name="address" value="${res.data['address']}" placeholder="ที่อยู่ (ไม่บังคับ)"></textarea>
@@ -159,7 +159,7 @@ function edit(id_card) {
         </form>
         `;
 
-        $('#myModalLabel').text('แก้ไขข้อมูลลูกค้า ' + id_card);
+        $('#myModalLabel').text('แก้ไขข้อมูลลูกค้า ' + username);
         $('#myModalBody').html(form_html);
         $('#gender').val(res.data['gender']);
         $('#myModal').modal('show');
@@ -187,20 +187,20 @@ function update() {
     });
 }
 
-function checkIdCard(id_card) {
+function checkUsername(username) {
     $.ajax({
         method: "post",
         url: "api/customer/examine.php",
         data: {
-            "id_card": id_card,
-            "examine": "id_card"
+            "username": username,
+            "examine": "username"
         }
     }).done(function (res) {
         console.log(res);
 
         if (res.examine == "Not Empty") {
             toastr.error(res.message);
-            $('#inputIdCard').val("").focus();
+            $('#inputUsername').val("").focus();
         }
     }).fail(function (res) {
         console.log(res);
@@ -227,9 +227,9 @@ function checkEmail(email) {
     });
 }
 
-function enable(id_card) {
+function enable(username) {
     swal({
-        title: "คุณต้องการเปิดใช้งานบัญชี " + id_card + "?",
+        title: "คุณต้องการเปิดใช้งานบัญชี " + username + "?",
         icon: "info",
         buttons: true,
     }).then((willEnable) => {
@@ -238,7 +238,7 @@ function enable(id_card) {
                 type: "get",
                 url: "api/customer/enable.php",
                 data: {
-                    "id_card": id_card
+                    "username": username
                 }
             }).done(function (res) {
                 console.log(res);
@@ -256,9 +256,9 @@ function enable(id_card) {
     });
 }
 
-function disable(id_card) {
+function disable(username) {
     swal({
-        title: "คุณต้องการปิดใช้งานบัญชี " + id_card + "?",
+        title: "คุณต้องการปิดใช้งานบัญชี " + username + "?",
         icon: "info",
         buttons: true,
     }).then((willDisable) => {
@@ -267,7 +267,7 @@ function disable(id_card) {
                 type: "get",
                 url: "api/customer/disable.php",
                 data: {
-                    "id_card": id_card
+                    "username": username
                 }
             }).done(function (res) {
                 console.log(res);

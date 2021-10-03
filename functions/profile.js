@@ -56,13 +56,13 @@ function checkEmail(email) {
     });
 }
 
-function getCustomerData(id_card) {
+function getCustomerData(username) {
     $.ajax({
         method: "post",
         url: "api/customer/read.php",
         data: {
-            "id_card": id_card,
-            "getDataByIdCard": "yes"
+            "username": username,
+            "getDataByUsername": "yes"
         }
     }).done(function (res) {
         console.log(res);
@@ -142,7 +142,7 @@ $('#updateProfileForm').submit(function (e) {
         );
 
         $('#myprofile').html("");
-        getCustomerData(res.id);
+        getCustomerData(res.username);
     }).fail(function (res) {
         console.log(res);
         $('#heading').append(

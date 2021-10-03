@@ -29,7 +29,7 @@ function read() {
                         ค่าที่พักทั้งหมด: ${element['cost']} บาท
                     </td>
                     <td>
-                        รหัส: ${element['id_card']} <br>
+                        ชื่อผู้ใช้งาน: ${element['username']} <br>
                         ชื่อ-นามสกุล: ${element['firstname'] + " " + element['lastname']} <br>
                         ที่อยู่: ${element['address']} <br>
                         เบอร์โทร: ${element['phone_number']} <br>
@@ -110,7 +110,7 @@ function readByStatus1() {
                         ค่าที่พักทั้งหมด: ${element['cost']} บาท
                     </td>
                     <td>
-                        รหัส: ${element['id_card']} <br>
+                        ชื่อผู้ใช้งาน: ${element['username']} <br>
                         ชื่อ-นามสกุล: ${element['firstname'] + " " + element['lastname']} <br>
                         ที่อยู่: ${element['address']} <br>
                         เบอร์โทร: ${element['phone_number']} <br>
@@ -191,7 +191,7 @@ function readByStatus2() {
                         ค่าที่พักทั้งหมด: ${element['cost']} บาท
                     </td>
                     <td>
-                        รหัส: ${element['id_card']} <br>
+                        ชื่อผู้ใช้งาน: ${element['username']} <br>
                         ชื่อ-นามสกุล: ${element['firstname'] + " " + element['lastname']} <br>
                         ที่อยู่: ${element['address']} <br>
                         เบอร์โทร: ${element['phone_number']} <br>
@@ -271,7 +271,7 @@ function readByStatus3() {
                         ค่าที่พักทั้งหมด: ${element['cost']} บาท
                     </td>
                     <td>
-                        รหัส: ${element['id_card']} <br>
+                        ชื่อผู้ใช้งาน: ${element['username']} <br>
                         ชื่อ-นามสกุล: ${element['firstname'] + " " + element['lastname']} <br>
                         ที่อยู่: ${element['address']} <br>
                         เบอร์โทร: ${element['phone_number']} <br>
@@ -364,7 +364,7 @@ function readByStatus4() {
                         ค่าที่พักทั้งหมด: ${element['cost']} บาท
                     </td>
                     <td>
-                        รหัส: ${element['id_card']} <br>
+                        ชื่อผู้ใช้งาน: ${element['username']} <br>
                         ชื่อ-นามสกุล: ${element['firstname'] + " " + element['lastname']} <br>
                         ที่อยู่: ${element['address']} <br>
                         เบอร์โทร: ${element['phone_number']} <br>
@@ -445,7 +445,7 @@ function readByStatus5() {
                         ค่าที่พักทั้งหมด: ${element['cost']} บาท
                     </td>
                     <td>
-                        รหัส: ${element['id_card']} <br>
+                        ชื่อผู้ใช้งาน: ${element['username']} <br>
                         ชื่อ-นามสกุล: ${element['firstname'] + " " + element['lastname']} <br>
                         ที่อยู่: ${element['address']} <br>
                         เบอร์โทร: ${element['phone_number']} <br>
@@ -524,7 +524,7 @@ function readByStatus6() {
                         ค่าที่พักทั้งหมด: ${element['cost']} บาท
                     </td>
                     <td>
-                        รหัส: ${element['id_card']} <br>
+                        ชื่อผู้ใช้งาน: ${element['username']} <br>
                         ชื่อ-นามสกุล: ${element['firstname'] + " " + element['lastname']} <br>
                         ที่อยู่: ${element['address']} <br>
                         เบอร์โทร: ${element['phone_number']} <br>
@@ -598,7 +598,7 @@ function readByStatus7() {
                         ค่าที่พักทั้งหมด: ${element['cost']} บาท
                     </td>
                     <td>
-                        รหัส: ${element['id_card']} <br>
+                        ชื่อผู้ใช้งาน: ${element['username']} <br>
                         ชื่อ-นามสกุล: ${element['firstname'] + " " + element['lastname']} <br>
                         ที่อยู่: ${element['address']} <br>
                         เบอร์โทร: ${element['phone_number']} <br>

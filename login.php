@@ -51,7 +51,7 @@ session_start();
                             <strong>ตรวจสอบสิทธิ์การใช้งาน</strong>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="id_card" minlength="13" maxlength="13" placeholder="เลขบัตรประจำตัวประชาชน" required>
+                            <input type="text" class="form-control" name="username" placeholder="ชื่อผู้ใช้งาน" required>
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" name="password" placeholder="รหัสผ่าน" required>

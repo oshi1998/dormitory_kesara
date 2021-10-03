@@ -6,9 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     require_once('../connect.php');
 
 
-    if (empty($_POST['id_card'])) {
+    if (empty($_POST['username'])) {
         http_response_code(412);
-        echo json_encode(['status' => false, 'message' => 'กรุณากรอกข้อมูลเลขบัตรประชาชน']);
+        echo json_encode(['status' => false, 'message' => 'กรุณากรอกชื่อผู้ใช้งาน']);
         exit();
     } else if (empty($_POST['password'])) {
         http_response_code(412);
@@ -16,9 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         exit();
     }
 
-    $sql = "SELECT * FROM customers WHERE id_card = ?";
+    $sql = "SELECT * FROM customers WHERE username = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_POST['id_card']]);
+    $stmt->execute([$_POST['username']]);
     $row = $stmt->fetchObject();
 
     if (!empty($row)) {
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 
                 session_start();
                 $_SESSION['CUSTOMER_LOGIN'] = TRUE;
-                $_SESSION['CUSTOMER_ID'] = $row->id_card;
+                $_SESSION['CUSTOMER_USERNAME'] = $row->username;
                 $_SESSION['CUSTOMER_FIRSTNAME'] = $row->firstname;
                 $_SESSION['CUSTOMER_LASTNAME'] = $row->lastname;
 
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 exit();
             } else {
                 http_response_code(412);
-                echo json_encode(['status' => false, 'message' => "บัญชี $_POST[id_card] ถูกปิดการใช้งานชั่วคราว กรุณาติดต่อผู้ดูแลระบบ"]);
+                echo json_encode(['status' => false, 'message' => "บัญชี $_POST[username] ถูกปิดการใช้งานชั่วคราว กรุณาติดต่อผู้ดูแลระบบ"]);
                 exit();
             }
         } else {

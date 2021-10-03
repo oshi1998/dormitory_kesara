@@ -3,16 +3,16 @@ session_start();
 
 require_once('api/connect.php');
 
-$sql = "SELECT current_book FROM customers WHERE id_card = ?";
+$sql = "SELECT current_book FROM customers WHERE username = ?";
 $stmt = $pdo->prepare($sql);
-$stmt->execute([$_SESSION['CUSTOMER_ID']]);
+$stmt->execute([$_SESSION['CUSTOMER_USERNAME']]);
 $row = $stmt->fetchObject();
 
 $current_book = $row->current_book;
 
 if (!empty($current_book)) {
     $sql = "
-        SELECT daily_books.id,customer_id,daterange,duration,check_in,check_out,time,cost,check_in_datetime,daily_room_id,status,note,name,floor,daily_books.created
+        SELECT daily_books.id,customer_username,daterange,duration,check_in,check_out,time,cost,check_in_datetime,daily_room_id,status,note,name,floor,daily_books.created
         FROM daily_books,daily_rooms,roomtypes
         WHERE daily_books.daily_room_id=daily_rooms.id
         AND daily_rooms.type=roomtypes.id
@@ -24,7 +24,7 @@ if (!empty($current_book)) {
 
     if (empty($daily)) {
         $sql = "
-            SELECT monthly_books.id,customer_id,schedule_move_in,move_in_date,cost,monthly_room_id,status,note,name,floor,monthly_books.created
+            SELECT monthly_books.id,customer_username,schedule_move_in,move_in_date,cost,monthly_room_id,status,note,name,floor,monthly_books.created
             FROM monthly_books,monthly_rooms,roomtypes
             WHERE monthly_books.monthly_room_id=monthly_rooms.id
             AND monthly_rooms.type=roomtypes.id
@@ -34,9 +34,9 @@ if (!empty($current_book)) {
         $stmt->execute([$current_book]);
         $monthly = $stmt->fetchObject();
 
-        $sql = "SELECT * FROM repairs WHERE room_id=? AND customer_id=? ORDER BY created DESC";
+        $sql = "SELECT * FROM repairs WHERE room_id=? AND customer_username=? ORDER BY created DESC";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$monthly->monthly_room_id, $_SESSION['CUSTOMER_ID']]);
+        $stmt->execute([$monthly->monthly_room_id, $_SESSION['CUSTOMER_USERNAME']]);
         $repairs = $stmt->fetchAll();
     }
 }
@@ -228,7 +228,7 @@ if (!empty($current_book)) {
                                     <td>
                                         <span class="badge badge-primary"><?= $daily->status ?></span>
                                         <?php if ($daily->status == "รอชำระค่ามัดจำ") : ?>
-                                            <a href="javascript:void(0)" onclick="dailyDeposit('<?= $daily->id ?>','<?= $daily->cost / 2 ?>')">คลิกชำระค่ามัดจำ!</a>
+                                            <a style="color:red;" href="javascript:void(0)" onclick="dailyDeposit('<?= $daily->id ?>','<?= $daily->cost / 2 ?>')">คลิกชำระค่ามัดจำ!</a>
                                         <?php endif ?>
                                     </td>
                                 </tr>
@@ -291,7 +291,7 @@ if (!empty($current_book)) {
                                     <td>
                                         <span class="badge badge-primary"><?= $monthly->status ?></span>
                                         <?php if ($monthly->status == "รอชำระค่ามัดจำ") : ?>
-                                            <a href="javascript:void(0)" onclick="monthlyDeposit('<?= $monthly->id ?>','<?= $monthly->cost / 2 ?>')">คลิกชำระค่ามัดจำ!</a>
+                                            <a style="color:red;" href="javascript:void(0)" onclick="monthlyDeposit('<?= $monthly->id ?>','<?= $monthly->cost / 2 ?>')">คลิกชำระค่ามัดจำ!</a>
                                         <?php endif ?>
                                     </td>
                                 </tr>

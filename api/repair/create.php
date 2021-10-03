@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $file = "";
     }
 
-    $sql = "INSERT INTO repairs (id,topic,description,room_id,customer_id,img,status) VALUES
+    $sql = "INSERT INTO repairs (id,topic,description,room_id,customer_username,img,status) VALUES
     (:id,:topic,:desc,:room,:cus,:img,:status)";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         'topic' => $_POST['topic'],
         'desc' => $_POST['description'],
         'room' => $_POST['room_id'],
-        'cus' => $_SESSION['CUSTOMER_ID'],
+        'cus' => $_SESSION['CUSTOMER_USERNAME'],
         'img' => $file,
         'status' => "รอผู้ดูแลรับเรื่อง"
     ]);

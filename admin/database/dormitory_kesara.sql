@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2021 at 11:56 AM
+-- Generation Time: Oct 03, 2021 at 08:23 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -76,6 +76,7 @@ INSERT INTO `banks` (`id`, `name`, `account_number`, `branch`, `holder`, `img`, 
 --
 
 CREATE TABLE `customers` (
+  `username` varchar(255) NOT NULL COMMENT 'ชื่อผู้ใช้งาน',
   `id_card` char(13) NOT NULL COMMENT 'เลขบัตรประชาชน',
   `firstname` varchar(255) NOT NULL COMMENT 'ชื่อจริง',
   `lastname` varchar(255) NOT NULL COMMENT 'นามสกุล',
@@ -91,6 +92,14 @@ CREATE TABLE `customers` (
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'อัพเดตล่าสุด'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`username`, `id_card`, `firstname`, `lastname`, `gender`, `phone_number`, `address`, `email`, `password`, `current_book`, `status`, `active`, `created`, `updated`) VALUES
+('oshi', '', 'วงศ์วสันต์', 'ดวงเกตุ', 'ชาย', '0972651700', '', 'thephenome1998@gmail.com', '$2y$10$fDseGoL5BZRPXQeJPapRy.tIlqOXGXyC5Us8JzHO9vceL9pVwATCm', '', 'ว่าง', 'Enable', '2021-10-03 16:32:48', '2021-10-03 18:15:45'),
+('test', '', 'วงศ์วสันต์', 'ดวงเกตุ', 'ชาย', '0972651700', '', 'test001@gmail.com', '$2y$10$rUdB.dSKMTYVSGQ2BdJoiuZn7OR6cChfSJkg2iKMG21SxkbxgYqpe', '', 'ว่าง', 'Enable', '2021-10-03 17:41:17', '2021-10-03 17:41:17');
+
 -- --------------------------------------------------------
 
 --
@@ -99,7 +108,7 @@ CREATE TABLE `customers` (
 
 CREATE TABLE `daily_books` (
   `id` varchar(255) NOT NULL COMMENT 'รหัส',
-  `customer_id` char(13) NOT NULL COMMENT 'เลขบัตรลูกค้า',
+  `customer_username` varchar(255) NOT NULL COMMENT 'ชื่อผู้ใช้งานลูกค้า',
   `daterange` varchar(255) NOT NULL COMMENT 'ช่วงวันที่',
   `duration` int(11) NOT NULL COMMENT 'ระยะเวลา',
   `check_in` date NOT NULL COMMENT 'วันที่เช็คอิน',
@@ -114,6 +123,13 @@ CREATE TABLE `daily_books` (
   `created` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'วันที่สร้างข้อมูล',
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'อัพเดตล่าสุด'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `daily_books`
+--
+
+INSERT INTO `daily_books` (`id`, `customer_username`, `daterange`, `duration`, `check_in`, `check_out`, `time`, `cost`, `check_in_datetime`, `check_out_datetime`, `daily_room_id`, `status`, `note`, `created`, `updated`) VALUES
+('DB20211003-655', 'oshi', '2021-10-03 ถึง 2021-10-04', 1, '2021-10-03', '2021-10-04', '00:00:00', '300.00', '2021-10-04 00:55:54', '2021-10-04 00:56:04', 'A1', 'เสร็จสิ้น', '', '2021-10-03 16:54:38', '2021-10-03 17:56:04');
 
 -- --------------------------------------------------------
 
@@ -147,7 +163,7 @@ INSERT INTO `daily_rooms` (`id`, `type`, `floor`, `img_position`, `active`, `cre
 
 CREATE TABLE `deposits` (
   `id` varchar(255) NOT NULL COMMENT 'รหัส',
-  `customer_id` char(13) NOT NULL COMMENT 'ลูกค้า',
+  `customer_username` varchar(255) NOT NULL COMMENT 'ลูกค้า',
   `book_id` varchar(255) NOT NULL COMMENT 'เลขจอง',
   `amount` decimal(10,2) NOT NULL COMMENT 'ยอดเงิน',
   `slip` text NOT NULL COMMENT 'ไฟล์ภาพสลิป',
@@ -161,6 +177,14 @@ CREATE TABLE `deposits` (
   `created` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'วันที่สร้างข้อมูล',
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'อัพเดตล่าสุด'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `deposits`
+--
+
+INSERT INTO `deposits` (`id`, `customer_username`, `book_id`, `amount`, `slip`, `receive_bank`, `receive_account_number`, `receive_owner`, `transfer_bank`, `transfer_account_number`, `transfer_owner`, `transfer_datetime`, `created`, `updated`) VALUES
+('DP20211004-214', 'oshi', 'MB20211003-487', '1500.00', 'DP20211004-214.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', '2021-10-04 01:12:00', '2021-10-03 18:13:01', '2021-10-03 18:13:01'),
+('DP20211004-627', 'oshi', 'DB20211003-655', '150.00', 'DP20211004-627.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', '2021-10-04 00:55:00', '2021-10-03 17:55:27', '2021-10-03 17:55:27');
 
 -- --------------------------------------------------------
 
@@ -200,7 +224,7 @@ INSERT INTO `images` (`id`, `img`, `type_id`, `created`) VALUES
 
 CREATE TABLE `monthly_books` (
   `id` varchar(255) NOT NULL COMMENT 'รหัส',
-  `customer_id` char(13) NOT NULL COMMENT 'รหัสลูกค้า',
+  `customer_username` varchar(255) NOT NULL COMMENT 'ชื่อผู้ใช้งานลูกค้า',
   `schedule_move_in` datetime DEFAULT NULL COMMENT 'กำหนดการจะย้ายเข้า',
   `move_in_date` date DEFAULT NULL COMMENT 'วันที่ย้ายเข้า',
   `move_out_date` date DEFAULT NULL COMMENT 'วันที่ย้ายออก',
@@ -211,6 +235,13 @@ CREATE TABLE `monthly_books` (
   `created` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'วันที่สร้างข้อมูล',
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'อัพเดตล่าสุด'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `monthly_books`
+--
+
+INSERT INTO `monthly_books` (`id`, `customer_username`, `schedule_move_in`, `move_in_date`, `move_out_date`, `cost`, `monthly_room_id`, `status`, `note`, `created`, `updated`) VALUES
+('MB20211003-487', 'oshi', '2021-10-09 13:00:00', '2021-10-04', '2021-10-04', '3000.00', 'B7', 'เสร็จสิ้น', '', '2021-10-03 18:06:54', '2021-10-03 18:15:45');
 
 -- --------------------------------------------------------
 
@@ -269,13 +300,20 @@ CREATE TABLE `repairs` (
   `topic` varchar(255) NOT NULL COMMENT 'หัวข้อ',
   `description` text NOT NULL COMMENT 'รายละเอียด',
   `room_id` varchar(255) NOT NULL COMMENT 'เลขห้อง',
-  `customer_id` char(13) NOT NULL COMMENT 'รหัสลูกค้า',
+  `customer_username` varchar(255) NOT NULL COMMENT 'ชื่อผู้ใช้งานลูกค้า',
   `img` text NOT NULL COMMENT 'ไฟล์ภาพ',
   `status` varchar(255) NOT NULL COMMENT 'สถานะ',
   `note` text NOT NULL COMMENT 'หมายเหตุ',
   `created` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'วันที่สร้างข้อมูล',
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'อัพเดตล่าสุด'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `repairs`
+--
+
+INSERT INTO `repairs` (`id`, `topic`, `description`, `room_id`, `customer_username`, `img`, `status`, `note`, `created`, `updated`) VALUES
+('RP20211004-112', 'ไฟห้องน้ำไม่ติด', 'ไฟห้องน้ำไม่ติด', 'B7', 'oshi', 'RP20211004-112.jpg', 'รับเรื่องแล้ว', '', '2021-10-03 18:13:41', '2021-10-03 18:15:16');
 
 -- --------------------------------------------------------
 
@@ -323,15 +361,15 @@ ALTER TABLE `banks`
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
-  ADD PRIMARY KEY (`id_card`);
+  ADD PRIMARY KEY (`username`);
 
 --
 -- Indexes for table `daily_books`
 --
 ALTER TABLE `daily_books`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_id` (`customer_id`),
-  ADD KEY `daily_room_id` (`daily_room_id`);
+  ADD KEY `daily_room_id` (`daily_room_id`),
+  ADD KEY `customer_username` (`customer_username`);
 
 --
 -- Indexes for table `daily_rooms`
@@ -345,7 +383,7 @@ ALTER TABLE `daily_rooms`
 --
 ALTER TABLE `deposits`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_id` (`customer_id`);
+  ADD KEY `customer_username` (`customer_username`);
 
 --
 -- Indexes for table `images`
@@ -359,8 +397,8 @@ ALTER TABLE `images`
 --
 ALTER TABLE `monthly_books`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_id` (`customer_id`),
-  ADD KEY `monthly_room_id` (`monthly_room_id`);
+  ADD KEY `monthly_room_id` (`monthly_room_id`),
+  ADD KEY `customer_username` (`customer_username`);
 
 --
 -- Indexes for table `monthly_rooms`
@@ -374,7 +412,7 @@ ALTER TABLE `monthly_rooms`
 --
 ALTER TABLE `repairs`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_id` (`customer_id`);
+  ADD KEY `customer_username` (`customer_username`);
 
 --
 -- Indexes for table `roomtypes`
@@ -412,8 +450,8 @@ ALTER TABLE `roomtypes`
 -- Constraints for table `daily_books`
 --
 ALTER TABLE `daily_books`
-  ADD CONSTRAINT `daily_books_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id_card`),
-  ADD CONSTRAINT `daily_books_ibfk_3` FOREIGN KEY (`daily_room_id`) REFERENCES `daily_rooms` (`id`);
+  ADD CONSTRAINT `daily_books_ibfk_3` FOREIGN KEY (`daily_room_id`) REFERENCES `daily_rooms` (`id`),
+  ADD CONSTRAINT `daily_books_ibfk_4` FOREIGN KEY (`customer_username`) REFERENCES `customers` (`username`);
 
 --
 -- Constraints for table `daily_rooms`
@@ -425,7 +463,7 @@ ALTER TABLE `daily_rooms`
 -- Constraints for table `deposits`
 --
 ALTER TABLE `deposits`
-  ADD CONSTRAINT `deposits_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id_card`);
+  ADD CONSTRAINT `deposits_ibfk_1` FOREIGN KEY (`customer_username`) REFERENCES `customers` (`username`);
 
 --
 -- Constraints for table `images`
@@ -437,8 +475,8 @@ ALTER TABLE `images`
 -- Constraints for table `monthly_books`
 --
 ALTER TABLE `monthly_books`
-  ADD CONSTRAINT `monthly_books_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id_card`),
-  ADD CONSTRAINT `monthly_books_ibfk_2` FOREIGN KEY (`monthly_room_id`) REFERENCES `monthly_rooms` (`id`);
+  ADD CONSTRAINT `monthly_books_ibfk_2` FOREIGN KEY (`monthly_room_id`) REFERENCES `monthly_rooms` (`id`),
+  ADD CONSTRAINT `monthly_books_ibfk_3` FOREIGN KEY (`customer_username`) REFERENCES `customers` (`username`);
 
 --
 -- Constraints for table `monthly_rooms`
@@ -450,7 +488,7 @@ ALTER TABLE `monthly_rooms`
 -- Constraints for table `repairs`
 --
 ALTER TABLE `repairs`
-  ADD CONSTRAINT `repairs_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id_card`);
+  ADD CONSTRAINT `repairs_ibfk_1` FOREIGN KEY (`customer_username`) REFERENCES `customers` (`username`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -18,7 +18,7 @@ session_start();
     <?php require_once('layouts/head.php'); ?>
 </head>
 
-<body onload="getCustomerData('<?= $_SESSION['CUSTOMER_ID'] ?>')">
+<body onload="getCustomerData('<?= $_SESSION['CUSTOMER_USERNAME'] ?>')">
 
     <!-- ***** Preloader Start ***** -->
     <?php require_once('layouts/preloader.php'); ?>
@@ -77,7 +77,7 @@ session_start();
                         </div>
                         <div class="form-group">
                             <label>ชื่อจริง</label>
-                            <input type="text" class="form-control" name="firstname" id="firstname" onchange="checkFirstname(event.target.value)" placeholder="ชื่อจริง" required>
+                            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="ชื่อจริง" required>
                         </div>
                         <div class="form-group">
                             <label>นามสกุล</label>
@@ -92,7 +92,7 @@ session_start();
                         </div>
                         <div class="form-group">
                             <label>เบอร์โทร</label>
-                            <input type="text" class="form-control" name="phone_number" id="phone_number" minlength="10" placeholder="เบอร์โทร (มากกว่า 1 เบอร์ได้)" required>
+                            <input type="text" class="form-control" name="phone_number" id="phone_number" minlength="10" maxlength="10" pattern="\d*" placeholder="เบอร์โทร" required>
                         </div>
                         <div class="form-group">
                             <label>ที่อยู่</label>

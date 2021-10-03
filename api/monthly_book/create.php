@@ -7,12 +7,12 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     session_start();
 
-    $sql = "INSERT INTO monthly_books (id,customer_id,schedule_move_in,monthly_room_id,cost,status) VALUES
+    $sql = "INSERT INTO monthly_books (id,customer_username,schedule_move_in,monthly_room_id,cost,status) VALUES
     (:id,:customer,:schedule,:room,:cost,:status)";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
         'id' => $_SESSION['MYBOOK_MONTH']['ID'],
-        'customer' => $_SESSION['CUSTOMER_ID'],
+        'customer' => $_SESSION['CUSTOMER_USERNAME'],
         'schedule' => $_SESSION['MYBOOK_MONTH']['SCHEDULE_MOVE_IN'],
         'cost' => $_SESSION['MYBOOK_MONTH']['COST'],
         'room' => $_SESSION['MYBOOK_MONTH']['ROOM_ID'],
@@ -21,11 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     if ($result) {
 
-        $sql = "UPDATE customers SET current_book=:cb WHERE id_card = :id";
+        $sql = "UPDATE customers SET current_book=:cb WHERE username = :usr";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             'cb' => $_SESSION['MYBOOK_MONTH']['ID'],
-            'id' => $_SESSION['CUSTOMER_ID']
+            'usr' => $_SESSION['CUSTOMER_USERNAME']
         ]);
 
         unset($_SESSION['MYBOOK_MONTH']);

@@ -4,9 +4,9 @@ session_start();
 require_once('api/connect.php');
 
 
-$sql = "SELECT current_book FROM customers WHERE id_card = ?";
+$sql = "SELECT current_book FROM customers WHERE username = ?";
 $stmt = $pdo->prepare($sql);
-$stmt->execute([$_SESSION['CUSTOMER_ID']]);
+$stmt->execute([$_SESSION['CUSTOMER_USERNAME']]);
 $row = $stmt->fetchObject();
 
 if (empty($row->current_book)) {
@@ -76,6 +76,12 @@ if (empty($row->current_book)) {
     <link rel="stylesheet" href="vendor/daterangepicker/daterangepicker.css">
 
     <style>
+
+        .room-id {
+            -webkit-text-stroke: 1px black; /* width and color */
+            color: red;
+        }
+
         .modal {
             display: none;
             /* Hidden by default */
@@ -236,8 +242,9 @@ if (empty($row->current_book)) {
                                     <?php foreach ($rooms as $room) { ?>
                                         <div class="col-lg-4 col-md-4">
                                             <div class="product-item">
-                                                <a href="javascript:void(0)" onclick="viewDetail('<?= $room['id'] ?>')">
-                                                    <img src="admin/dist/img/room/<?= $room['img'] ?>">
+                                                <br>
+                                                <a class="room-id text-center" href="javascript:void(0)" onclick="viewDetail('<?= $room['id'] ?>')">
+                                                    <h1><?= $room['id']?></h1>
                                                 </a>
                                                 <div class="down-content">
                                                     <a href="javascript:void(0)" onclick="viewDetail('<?= $room['id'] ?>')">

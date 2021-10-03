@@ -12,14 +12,14 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     $file = $id.$extension;
     $dir_target = "../../admin/dist/img/slip/".$file;
 
-    $sql = "INSERT INTO deposits (id,customer_id,book_id,amount,slip,receive_bank,receive_account_number,
+    $sql = "INSERT INTO deposits (id,customer_username,book_id,amount,slip,receive_bank,receive_account_number,
     receive_owner,transfer_bank,transfer_account_number,transfer_owner,transfer_datetime) VALUES 
     (:id,:cus,:book,:amount,:slip,:rb,:racc,:ro,:tb,:tacc,:to,:tdate)";
 
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
         'id' => $id,
-        'cus' => $_SESSION['CUSTOMER_ID'],
+        'cus' => $_SESSION['CUSTOMER_USERNAME'],
         'book' => $_POST['book_id'],
         'amount' => $_POST['amount'],
         'slip' => $file,

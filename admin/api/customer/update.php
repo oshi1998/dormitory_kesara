@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         exit();
     }
 
-    $sql = "UPDATE customers SET firstname=:firstname,lastname=:lastname,gender=:gender,phone_number=:phone,email=:email WHERE id_card = :id";
+    $sql = "UPDATE customers SET firstname=:firstname,lastname=:lastname,gender=:gender,phone_number=:phone,email=:email WHERE username = :username";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
         'firstname' => $_POST['firstname'],
@@ -35,12 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         'gender' => $_POST['gender'],
         'phone' => $_POST['phone_number'],
         'email' => $_POST['email'],
-        'id' => $_POST['id_card']
+        'username' => $_POST['username']
     ]);
 
     if ($result) {
         http_response_code(200);
-        echo json_encode(['status' => true, 'message' => "อัพเดตข้อมูล $_POST[id_card] สำเร็จ"]);
+        echo json_encode(['status' => true, 'message' => "อัพเดตข้อมูล $_POST[username] สำเร็จ"]);
         exit();
     } else {
         http_response_code(412);
