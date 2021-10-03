@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     $sql = "INSERT INTO customers (username,firstname,lastname,gender,phone_number,address,email,password,status)
-        VALUES (:id,:username,:firstname,:lastname,:gender,:phone,:address,:email,:password,:status)";
+        VALUES (:username,:firstname,:lastname,:gender,:phone,:address,:email,:password,:status)";
     $stmt = $pdo->prepare($sql);
     $result = $stmt->execute([
         'username' => $_POST['username'],
