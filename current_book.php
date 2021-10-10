@@ -289,9 +289,11 @@ if (!empty($current_book)) {
                                 <tr>
                                     <th>สถานะ</th>
                                     <td>
-                                        <span class="badge badge-primary"><?= $monthly->status ?></span>
                                         <?php if ($monthly->status == "รอชำระค่ามัดจำ") : ?>
+                                            <span class="badge badge-danger"><?= $monthly->status ?></span>
                                             <a style="color:red;" href="javascript:void(0)" onclick="monthlyDeposit('<?= $monthly->id ?>','<?= $monthly->cost / 2 ?>')">คลิกชำระค่ามัดจำ!</a>
+                                        <?php else : ?>
+                                            <span class="badge badge-primary"><?= $monthly->status ?></span>
                                         <?php endif ?>
                                     </td>
                                 </tr>
