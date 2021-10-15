@@ -226,9 +226,11 @@ if (!empty($current_book)) {
                                 <tr>
                                     <th>สถานะ</th>
                                     <td>
-                                        <span class="badge badge-primary"><?= $daily->status ?></span>
                                         <?php if ($daily->status == "รอชำระค่ามัดจำ") : ?>
+                                            <span class="badge badge-danger"><?= $daily->status ?></span>
                                             <a style="color:red;" href="javascript:void(0)" onclick="dailyDeposit('<?= $daily->id ?>','<?= $daily->cost / 2 ?>')">คลิกชำระค่ามัดจำ!</a>
+                                        <?php else : ?>
+                                            <span class="badge badge-primary"><?= $daily->status ?></span>
                                         <?php endif ?>
                                     </td>
                                 </tr>
