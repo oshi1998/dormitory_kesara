@@ -38,6 +38,16 @@ if (!empty($current_book)) {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$monthly->monthly_room_id, $_SESSION['CUSTOMER_USERNAME']]);
         $repairs = $stmt->fetchAll();
+
+        $sql = "SELECT * FROM notice_payments WHERE np_customer_username=? AND np_room_id=? AND np_status=?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$_SESSION['CUSTOMER_USERNAME'], $monthly->monthly_room_id, "รอชำระเงิน"]);
+        $pay_np = $stmt->fetchObject();
+
+        $sql = "SELECT * FROM notice_payments WHERE np_customer_username=? AND np_room_id=? ORDER BY np_created DESC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$_SESSION['CUSTOMER_USERNAME'], $monthly->monthly_room_id]);
+        $np = $stmt->fetchAll();
     }
 }
 
@@ -258,6 +268,7 @@ if (!empty($current_book)) {
                             <h1>
                                 ชั้น <?= $monthly->floor ?> ห้อง <strong style="color:red;"><?= $monthly->monthly_room_id ?></strong> <?= $monthly->name ?>
                             </h1>
+                            <p>บิลแจ้งชำระค่าห้องจะมาทุกๆ วันที่ 28 ของทุกเดือน <?= (!empty($pay_np)) ? "<strong style='color:red;'>ขณะนี้คุณมีใบแจ้งชำระค่าห้อง 1 รายการ <a target='_blank' href='np_info.php?id=$pay_np->np_id'>รายละเอียดคลิก</a></strong>" : "" ?></p>
                         </div>
 
 
@@ -362,6 +373,54 @@ if (!empty($current_book)) {
                                     </div>
                                 <?php endif ?>
                             </div>
+
+                            <?php if ($monthly->status == "อยู่ระหว่างการเช่าห้อง") : ?>
+
+                                <div class="col-12 mt-5">
+                                    <hr>
+                                    <div class="text-center mb-5">
+                                        <h1>ประวัติการชำระค่าห้องของคุณ ภายในห้อง <?= $monthly->monthly_room_id ?></h1>
+                                    </div>
+
+                                    <?php if (count($np) > 0) : ?>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>วันที่ออกบิล</th>
+                                                        <th>รหัสบิล</th>
+                                                        <th>เดือน/ปี</th>
+                                                        <th>จำนวนเงิน</th>
+                                                        <th>สถานะ</th>
+                                                        <th>จัดการ</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($np as $item) { ?>
+                                                        <tr>
+                                                            <td><?= $item['np_created'] ?></td>
+                                                            <td><?= $item['np_id'] ?></td>
+                                                            <td><?= $item['np_month'] . " " . $item['np_year'] ?></td>
+                                                            <td><?= number_format($item['np_cost'], 2) ?></td>
+                                                            <td><?= $item['np_status'] ?></td>
+                                                            <td>
+                                                                <a href="np_info.php?id=<?= $item['np_id'] ?>" class="btn btn-info">
+                                                                    <i class="fa fa-info"></i>
+                                                                    <span>รายละเอียด</span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    <?php else : ?>
+                                        <div class="alert alert-warning" role="alert">
+                                            <h4 class="alert-heading">คุณไม่มีประวัติการชำระค่าห้อง ภายในห้อง <?= $monthly->monthly_room_id ?>!</h4>
+                                        </div>
+                                    <?php endif ?>
+                                </div>
+                            <?php endif ?>
 
                         </div>
                     <?php endif ?>

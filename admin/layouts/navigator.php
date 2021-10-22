@@ -76,6 +76,14 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 24);
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="notice_payment.php" class="nav-link <?= ($current_file == 'notice_payment.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                        <p>
+                            แจ้งชำระเงินห้องรายเดือน
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item <?= ($current_file == 'daily_book.php' || $current_file == 'monthly_book.php') ? 'menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= ($current_file == 'daily_book.php' || $current_file == 'monthly_book.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-book"></i>

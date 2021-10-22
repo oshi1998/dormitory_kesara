@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2021 at 09:59 PM
+-- Generation Time: Oct 22, 2021 at 10:15 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -185,7 +185,8 @@ CREATE TABLE `deposits` (
 
 INSERT INTO `deposits` (`id`, `customer_username`, `book_id`, `amount`, `slip`, `receive_bank`, `receive_account_number`, `receive_owner`, `transfer_bank`, `transfer_account_number`, `transfer_owner`, `transfer_datetime`, `created`, `updated`) VALUES
 ('DP20211004-214', 'oshi', 'MB20211003-487', '1500.00', 'DP20211004-214.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', '2021-10-04 01:12:00', '2021-10-03 18:13:01', '2021-10-03 18:13:01'),
-('DP20211004-627', 'oshi', 'DB20211003-655', '150.00', 'DP20211004-627.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', '2021-10-04 00:55:00', '2021-10-03 17:55:27', '2021-10-03 17:55:27');
+('DP20211004-627', 'oshi', 'DB20211003-655', '150.00', 'DP20211004-627.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', '2021-10-04 00:55:00', '2021-10-03 17:55:27', '2021-10-03 17:55:27'),
+('DP20211021-205', 'oshi', 'MB20211003-46', '1500.00', 'DP20211021-205.jpg', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', '2021-10-21 01:50:00', '2021-10-20 18:50:47', '2021-10-20 18:50:47');
 
 -- --------------------------------------------------------
 
@@ -242,7 +243,7 @@ CREATE TABLE `monthly_books` (
 --
 
 INSERT INTO `monthly_books` (`id`, `customer_username`, `schedule_move_in`, `move_in_date`, `move_out_date`, `cost`, `monthly_room_id`, `status`, `note`, `created`, `updated`) VALUES
-('MB20211003-46', 'oshi', '2021-10-04', NULL, NULL, '3000.00', 'A11', 'รออนุมัติ', '', '2021-10-03 19:53:25', '2021-10-03 19:53:25'),
+('MB20211003-46', 'oshi', '2021-10-04', '2021-10-21', NULL, '3000.00', 'A11', 'อยู่ระหว่างการเช่าห้อง', '', '2021-10-03 19:53:25', '2021-10-20 18:51:04'),
 ('MB20211003-487', 'oshi', '2021-10-09', '2021-10-04', '2021-10-04', '3000.00', 'B7', 'เสร็จสิ้น', '', '2021-10-03 18:06:54', '2021-10-03 18:15:45');
 
 -- --------------------------------------------------------
@@ -290,6 +291,64 @@ INSERT INTO `monthly_rooms` (`id`, `type`, `floor`, `img_position`, `active`, `c
 ('B7', 4, '2', '', 'พร้อมใช้งาน', '2021-09-24 14:13:54', '2021-09-24 14:13:54'),
 ('B8', 4, '2', '', 'พร้อมใช้งาน', '2021-09-24 14:13:59', '2021-09-24 14:13:59'),
 ('B9', 4, '2', '', 'พร้อมใช้งาน', '2021-09-24 14:14:05', '2021-09-24 14:14:05');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notice_payments`
+--
+
+CREATE TABLE `notice_payments` (
+  `np_id` varchar(255) NOT NULL COMMENT 'รหัสใบเสร็จ',
+  `np_customer_username` varchar(255) NOT NULL COMMENT 'ลูกค้า',
+  `np_manager_name` varchar(255) NOT NULL COMMENT 'ชื่อผู้จัดการ',
+  `np_room_id` varchar(255) NOT NULL COMMENT 'รหัสห้อง',
+  `np_month` varchar(255) NOT NULL COMMENT 'เดือน',
+  `np_year` varchar(255) NOT NULL COMMENT 'ปี',
+  `np_cost` decimal(10,2) NOT NULL COMMENT 'ราคาทั้งหมด',
+  `np_fine` decimal(10,2) NOT NULL COMMENT 'ค่าปรับ',
+  `np_expired_date` varchar(255) NOT NULL COMMENT 'วันที่หมดเขต',
+  `np_status` varchar(255) NOT NULL COMMENT 'สถานะ',
+  `np_pay` varchar(255) NOT NULL COMMENT 'รูปแบบการจ่ายเงิน',
+  `np_receive_bank` varchar(255) NOT NULL COMMENT 'ธนาคารรับเงิน',
+  `np_receive_acc` varchar(255) NOT NULL COMMENT 'เลขบัญชีรับเงิน',
+  `np_receive_owner` varchar(255) NOT NULL COMMENT 'ชื่อบัญชีรับเงิน',
+  `np_transfer_bank` varchar(255) NOT NULL COMMENT 'ธนาคารผู้โอน',
+  `np_transfer_acc` varchar(255) NOT NULL COMMENT 'เลขบัญชีผู้โอน',
+  `np_transfer_owner` varchar(255) NOT NULL COMMENT 'ชื่อบัญชีผู้โอน',
+  `np_transfer_datetime` varchar(255) NOT NULL COMMENT 'เวลาที่โอน',
+  `np_slip` text NOT NULL COMMENT 'ไฟล์ภาพสลิป',
+  `np_created` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'วันที่สร้าง'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `notice_payments`
+--
+
+INSERT INTO `notice_payments` (`np_id`, `np_customer_username`, `np_manager_name`, `np_room_id`, `np_month`, `np_year`, `np_cost`, `np_fine`, `np_expired_date`, `np_status`, `np_pay`, `np_receive_bank`, `np_receive_acc`, `np_receive_owner`, `np_transfer_bank`, `np_transfer_acc`, `np_transfer_owner`, `np_transfer_datetime`, `np_slip`, `np_created`) VALUES
+('NP20211022-904', 'oshi', 'Prakorn Junthalungzevorakul', 'A11', 'ตุลาคม', '2564', '3400.00', '100.00', '1', 'สำเร็จ', 'ชำระออนไลน์', 'ไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', 'ธนาคารไทยพาณิชย์', '4066171712', 'วงศ์วสันต์ ดวงเกตุ', '2021-10-23T02:37', 'NP20211022-904.jpg', '2021-10-22 16:39:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notice_payment_details`
+--
+
+CREATE TABLE `notice_payment_details` (
+  `npd_id` int(11) NOT NULL COMMENT 'รหัสรายการ',
+  `npd_np_id` varchar(255) NOT NULL COMMENT 'รหัสใบเสร็จ',
+  `npd_name` varchar(255) NOT NULL COMMENT 'ชื่อรายการ',
+  `npd_cost` decimal(10,2) NOT NULL COMMENT 'ราคา'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `notice_payment_details`
+--
+
+INSERT INTO `notice_payment_details` (`npd_id`, `npd_np_id`, `npd_name`, `npd_cost`) VALUES
+(12, 'NP20211022-904', 'ค่าเช่าห้อง', '3000.00'),
+(13, 'NP20211022-904', 'ค่าน้ำ', '100.00'),
+(14, 'NP20211022-904', 'ค่าไฟ', '300.00');
 
 -- --------------------------------------------------------
 
@@ -410,6 +469,20 @@ ALTER TABLE `monthly_rooms`
   ADD KEY `type` (`type`);
 
 --
+-- Indexes for table `notice_payments`
+--
+ALTER TABLE `notice_payments`
+  ADD PRIMARY KEY (`np_id`),
+  ADD KEY `np_customer_username` (`np_customer_username`);
+
+--
+-- Indexes for table `notice_payment_details`
+--
+ALTER TABLE `notice_payment_details`
+  ADD PRIMARY KEY (`npd_id`),
+  ADD KEY `npd_np_id` (`npd_np_id`);
+
+--
 -- Indexes for table `repairs`
 --
 ALTER TABLE `repairs`
@@ -437,6 +510,12 @@ ALTER TABLE `banks`
 --
 ALTER TABLE `images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `notice_payment_details`
+--
+ALTER TABLE `notice_payment_details`
+  MODIFY `npd_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสรายการ', AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `roomtypes`
@@ -485,6 +564,18 @@ ALTER TABLE `monthly_books`
 --
 ALTER TABLE `monthly_rooms`
   ADD CONSTRAINT `monthly_rooms_ibfk_1` FOREIGN KEY (`type`) REFERENCES `roomtypes` (`id`);
+
+--
+-- Constraints for table `notice_payments`
+--
+ALTER TABLE `notice_payments`
+  ADD CONSTRAINT `notice_payments_ibfk_1` FOREIGN KEY (`np_customer_username`) REFERENCES `customers` (`username`);
+
+--
+-- Constraints for table `notice_payment_details`
+--
+ALTER TABLE `notice_payment_details`
+  ADD CONSTRAINT `notice_payment_details_ibfk_1` FOREIGN KEY (`npd_np_id`) REFERENCES `notice_payments` (`np_id`);
 
 --
 -- Constraints for table `repairs`
