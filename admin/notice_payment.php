@@ -28,8 +28,13 @@ function dateThai($strDate)
     return "$strDay $strMonthThai $strYear";
 }
 
-$current_month = monthThai(date("Y-m-d"));
-$current_year = yearThai(date("Y-m-d"));
+if (isset($_POST["month"]) && !empty($_POST["month"]) && isset($_POST["year"]) && !empty($_POST["year"])) {
+    $current_month = $_POST["month"];
+    $current_year = $_POST["year"];
+} else {
+    $current_month = monthThai(date("Y-m-d"));
+    $current_year = yearThai(date("Y-m-d"));
+}
 
 
 //SQL ดึงปีที่น้อยที่สุดในตาราง Notice Payments
@@ -128,11 +133,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <form class="form-inline mt-2" id="findNPForm">
+                                    <form class="form-inline mt-2" id="findNPForm" method="post">
                                         <div class="form-group mb-2">
                                             <label>เดือน</label>
                                             <select class="form-control mx-sm-3" name="month">
-                                                <option value="" selected disabled>--- เลือกเดือน ---</option>
                                                 <option value="มกราคม">มกราคม</option>
                                                 <option value="กุมภาพันธ์">กุมภาพันธ์</option>
                                                 <option value="มีนาคม">มีนาคม</option>
@@ -150,7 +154,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <div class="form-group mx-sm-3 mb-2">
                                             <label>ปี</label>
                                             <select class="form-control mx-sm-3" name="year">
-                                                <option value="" selected disabled>--- เลือกปี ---</option>
                                                 <?php foreach (range($current_year, $earliest_year) as $year) { ?>
                                                     <option value="<?= $year ?>"><?= $year ?></option>
                                                 <?php } ?>
