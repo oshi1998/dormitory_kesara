@@ -60,6 +60,35 @@ $current_file = substr($_SERVER['SCRIPT_NAME'], 24);
                         </p>
                     </a>
                 </li>
+                <li class="nav-item <?= ($current_file == 'report_general.php' || $current_file == 'report_daily.php' || $current_file == 'report_monthly.php') ? 'menu-open' : '' ?>">
+                    <a href="#" class="nav-link <?= ($current_file == 'report_general.php' || $current_file == 'report_daily.php' || $current_file == 'report_monthly.php') ? 'active' : '' ?>">
+                        <i class="nav-icon fas fa-clipboard"></i>
+                        <p>
+                            รายงาน
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="report_general.php" class="nav-link <?= ($current_file == 'report_general.php') ? 'active' : '' ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>ทั่วไป</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="report_daily.php" class="nav-link <?= ($current_file == 'report_daily.php') ? 'active' : '' ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>การใช้งานห้องรายวัน</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="report_monthly.php" class="nav-link <?= ($current_file == 'report_monthly.php') ? 'active' : '' ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>การใช้งานห้องรายเดือน</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a href="repair.php" class="nav-link <?= ($current_file == 'repair.php') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-tools"></i>

@@ -1,4 +1,43 @@
-<?php require_once('permission/access.php') ?>
+<?php
+require_once('permission/access.php');
+require_once('api/connect.php');
+
+//รายวัน
+$sql = "SELECT COUNT(*) as rent_room FROM daily_books WHERE status='อยู่ระหว่างการเช็คอิน'";
+$stmt = $pdo->query($sql);
+$obj1 = $stmt->fetchObject();
+
+$sql = "SELECT COUNT(*) as free_room FROM daily_rooms WHERE daily_rooms.id NOT IN (SELECT daily_room_id FROM daily_books WHERE status='อยู่ระหว่างการเช็คอิน')";
+$stmt = $pdo->query($sql);
+$obj2 = $stmt->fetchObject();
+
+//รายเดือน
+function monthThai($strDate)
+{
+    $strMonth = date("n", strtotime($strDate));
+    $strMonthCut = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
+    $strMonthThai = $strMonthCut[$strMonth];
+    return "$strMonthThai";
+}
+
+function yearThai($strDate)
+{
+    $strYear = date("Y", strtotime($strDate)) + 543;
+    return "$strYear";
+}
+
+$current_month = monthThai(date("Y-m-d"));
+$current_year = yearThai(date("Y-m-d"));
+
+$sql = "SELECT COUNT(*) as rent_room FROM monthly_books WHERE status='อยู่ระหว่างการเช่าห้อง'";
+$stmt = $pdo->query($sql);
+$obj3 = $stmt->fetchObject();
+
+$sql = "SELECT COUNT(*) as free_room FROM monthly_rooms WHERE monthly_rooms.id NOT IN (SELECT monthly_room_id FROM monthly_books WHERE status='อยู่ระหว่างการเช่าห้อง')";
+$stmt = $pdo->query($sql);
+$obj4 = $stmt->fetchObject();
+
+?>
 
 <!DOCTYPE html>
 <!--
@@ -107,6 +146,64 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <!-- ./col -->
                     </div>
                     <!-- /.row -->
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-12">
+                            <h1 class="m-0">รายงานห้องรายวัน ประจำวันที่ <?= date("d-m-Y"); ?></h1>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-primary">
+                                <div class="inner">
+                                    <h3><?= $obj1->rent_room ?> ห้อง</h3>
+                                    <p>กำลังใช้งาน</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3><?= $obj2->free_room ?> ห้อง</h3>
+                                    <p>ว่าง</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-12">
+                            <h1 class="m-0">รายงานห้องรายเดือน ประจำเดือน <?= $current_month ?> ปี <?= $current_year ?></h1>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-primary">
+                                <div class="inner">
+                                    <h3><?= $obj3->rent_room ?> ห้อง</h3>
+                                    <p>กำลังใช้งาน</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3><?= $obj4->free_room ?> ห้อง</h3>
+                                    <p>ว่าง</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
             </section>
